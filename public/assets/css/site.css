@@ -293,24 +293,12 @@ sup { font-size: 0.6em; line-height: 0; }
 @media (max-width: 900px) { .glance ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .glance ul { grid-template-columns: 1fr; gap: 1.4rem; } }
 
-/* ---------- Mission (centered statement) + pledge ---------- */
+/* ---------- Mission (centered statement) ---------- */
 .mission-block { display: flex; flex-direction: column; align-items: center; gap: 3rem; text-align: center; }
 .mission-block .kicker { margin: 0 0 1.4rem; }
 .mission-block h2 { margin: 0; }
 .mission-block .statement { max-width: 880px; }
 .mission-block .statement p { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.625rem); line-height: 1.22; color: var(--ink); text-wrap: balance; }
-.pledge {
-  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-  border: 1px solid var(--line); background: var(--paper-2);
-  padding: 1.4rem 1.9rem; max-width: 760px; width: 100%; text-align: left;
-}
-.pledge img { width: 56px; height: 56px; flex: none; }
-.pledge > div { flex: 1 1 300px; }
-.pledge h3 { font-size: 1.55rem; margin: 0 0 0.2em; }
-.pledge p { margin: 0; font-size: 0.9375rem; }
-.pledge .more { display: inline-flex; align-items: center; gap: 0.5em; font-family: var(--sans); font-size: 0.875rem; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px; }
-.pledge .more:hover { color: var(--blue); border-color: var(--blue); }
-.pledge .more svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 
 /* ---------- Split layouts ---------- */
 .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
