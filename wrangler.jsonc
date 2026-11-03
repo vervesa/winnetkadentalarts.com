@@ -7,8 +7,13 @@
     "directory": "./public",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
-    "not_found_handling": "404-page"
+    "not_found_handling": "404-page",
+    "run_worker_first": true
   },
+  "routes": [
+    { "pattern": "www.winnetkadentalarts.com", "custom_domain": true },
+    { "pattern": "winnetkadentalarts.com", "custom_domain": true }
+  ],
   "observability": { "enabled": true },
   "workers_dev": true,
 
@@ -17,14 +22,9 @@
     "NOTIFY_TO": "info@wargadds.com"
   }
 
-  // ---- Go-live -------------------------------------------------------------
-  // Uncomment to attach the custom domains. Cloudflare creates the DNS records
-  // automatically, which replaces whatever currently answers for the domain
-  // (the WordPress site). The Worker redirects the apex to www.
-  // "routes": [
-  //   { "pattern": "www.winnetkadentalarts.com", "custom_domain": true },
-  //   { "pattern": "winnetkadentalarts.com", "custom_domain": true }
-  // ],
+  // ---- Domains ---------------------------------------------------------------
+  // Both hostnames are attached as custom domains (see "routes" above); the
+  // Worker runs first for every request and redirects the apex to www.
 
   // ---- Appointment form e-mail ---------------------------------------------
   // 1. Cloudflare dashboard -> winnetkadentalarts.com -> Email -> Email Routing: enable it.
