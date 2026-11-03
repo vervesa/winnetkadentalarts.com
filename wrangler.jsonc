@@ -2,9 +2,11 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "winnetkadentalarts-com",
   "main": "src/index.js",
+  "minify": true,
+  "build": { "command": "node build.mjs", "watch_dir": "public" },
   "compatibility_date": "2025-10-01",
   "assets": {
-    "directory": "./public",
+    "directory": "./dist",
     "binding": "ASSETS",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page",

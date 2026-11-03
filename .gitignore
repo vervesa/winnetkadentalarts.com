@@ -3,6 +3,9 @@ node_modules/
 .npm/
 .pnp.*
 
+# Build output (generated from public/ by build.mjs)
+dist/
+
 # Cloudflare / wrangler
 .wrangler/
 .dev.vars

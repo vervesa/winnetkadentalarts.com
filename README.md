@@ -5,7 +5,9 @@ Static site for Winnetka Dental Arts, served from Cloudflare Workers static asse
 
 ## Layout
 
-    public/                 the site — plain HTML, one stylesheet, one script, self-hosted fonts (OFL)
+    public/                 the site source — plain HTML, one stylesheet, one script, self-hosted fonts (OFL)
+    build.mjs               copies public/ to dist/ and minifies HTML, CSS and JS; wrangler runs it before
+                            every deploy/dev, so only the minified copy is served (dist/ is not committed)
     public/_headers         cache + security headers (Workers static assets read this file)
     public/404.html         not-found page
     src/index.js            Worker: redirects winnetkadentalarts.com → www, handles POST /api/appointment-request
@@ -18,7 +20,8 @@ Patient forms and brochures live in `public/downloads/`.
 ## Local preview
 
     npm install
-    npm run dev          # http://localhost:8787 — same runtime Cloudflare uses
+    npm run dev          # builds dist/ then serves it at http://localhost:8787 — same runtime Cloudflare uses
+    npm run build        # just produce dist/
 
 ## Deploy
 
