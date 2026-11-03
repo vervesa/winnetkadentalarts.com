@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 400" width="500" height="400" role="img" aria-label="Line drawing of a molar">
+  <rect width="500" height="400" fill="#faf8f3"/>
+  <path d="M70 372 V222 A180 180 0 0 1 430 222 V372" fill="none" stroke="#121a2b" stroke-opacity="0.22" stroke-width="1"/>
+  <path d="M98 372 V228 A152 152 0 0 1 402 228 V372" fill="none" stroke="#2d5aa6" stroke-opacity="0.35" stroke-width="1"/>
+  <g fill="none" stroke="#121a2b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M176 214
+             C176 178 182 148 203 138
+             C220 130 236 142 250 156
+             C264 142 280 130 297 138
+             C318 148 324 178 324 214
+             C324 250 312 292 291 336
+             C287 348 275 348 272 338
+             C269 316 266 292 262 272
+             C258 264 242 264 238 272
+             C234 292 231 316 228 338
+             C225 348 213 348 209 336
+             C188 292 176 250 176 214 Z"/>
+    <path d="M216 184 C228 174 241 176 250 186 C259 176 272 174 284 184" stroke-width="1.5" stroke-opacity="0.85"/>
+  </g>
+</svg>

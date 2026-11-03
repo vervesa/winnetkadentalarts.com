@@ -1,6 +1,7 @@
 /* Winnetka Dental Arts — minimal site script
    1. Mobile menu + dropdown toggles (keyboard and touch friendly)
-   2. Click-to-load YouTube embeds (keeps pages light until a video is wanted) */
+   2. Click-to-load YouTube embeds (keeps pages light until a video is wanted)
+   3. Services slider controls (the track itself is native scroll-snap) */
 (function () {
   "use strict";
 
@@ -48,6 +49,50 @@
       toggle.setAttribute("aria-expanded", "false");
       toggle.focus();
     }
+  });
+
+  /* 3. Services slider: arrows, progress line and counter on top of a native scroll-snap track */
+  var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  Array.prototype.forEach.call(document.querySelectorAll("[data-slider]"), function (slider) {
+    var track = slider.querySelector(".slider-track");
+    var prev = slider.querySelector('[data-dir="-1"]');
+    var next = slider.querySelector('[data-dir="1"]');
+    var thumb = slider.querySelector(".slider-thumb");
+    var count = slider.querySelector(".slider-count .cur");
+    if (!track || !prev || !next) return;
+    var slides = track.children;
+    var total = slides.length;
+
+    function gap() { return parseFloat(getComputedStyle(track).columnGap) || 0; }
+    function step() {
+      var first = slides[0];
+      if (!first) return track.clientWidth;
+      return first.getBoundingClientRect().width + gap();
+    }
+    // the last visible slide needs no trailing gap, so count the gap once more than the slides
+    function perView() { return Math.max(1, Math.floor((track.clientWidth + gap() + 1) / step())); }
+    function update() {
+      var max = track.scrollWidth - track.clientWidth;
+      var x = track.scrollLeft;
+      var first = Math.min(total, Math.ceil(x / step() - 0.02) + 1);
+      var last = Math.min(total, first + perView() - 1);
+      if (count) count.textContent = first === last ? String(first) : first + "–" + last;
+      if (thumb) {
+        var w = Math.max(track.clientWidth / track.scrollWidth, 0.1);
+        thumb.style.width = (w * 100) + "%";
+        thumb.style.left = (max > 0 ? (x / max) * (1 - w) * 100 : 0) + "%";
+      }
+      prev.disabled = x <= 2;
+      next.disabled = x >= max - 2;
+    }
+    function go(dir) {
+      track.scrollBy({ left: dir * step() * perView(), behavior: reducedMotion ? "auto" : "smooth" });
+    }
+    prev.addEventListener("click", function () { go(-1); });
+    next.addEventListener("click", function () { go(1); });
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    update();
   });
 
   var videos = document.querySelectorAll(".video[data-video]");
