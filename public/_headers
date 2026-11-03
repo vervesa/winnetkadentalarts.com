@@ -1,4 +1,12 @@
-/assets/*
+# Stylesheet and script change often: always revalidate (cheap 304s), never cache them for a year.
+/assets/css/*
+  Cache-Control: public, max-age=0, must-revalidate
+/assets/js/*
+  Cache-Control: public, max-age=0, must-revalidate
+# Fonts and images are content that doesn't change in place (rename the file when it does).
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/img/*
   Cache-Control: public, max-age=31536000, immutable
 /downloads/*
   Cache-Control: public, max-age=86400

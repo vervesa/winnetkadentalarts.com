@@ -104,7 +104,7 @@ async function handleAppointmentRequest(request, env) {
 
 function page(title, text, status) {
   const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>${title} | Winnetka Dental Arts</title><link rel="stylesheet" href="/assets/css/site.css"></head>
+<title>${title} | Winnetka Dental Arts</title><link rel="stylesheet" href="/assets/css/site.css?v=2"></head>
 <body><main id="main"><header class="page-head"><div class="wrap"><h1>${title}</h1></div></header>
 <div class="wrap page-grid full"><article class="page-body prose"><p class="lede">${text}</p>
 <p><a class="btn" href="/contact/">Contact Us</a></p></article></div></main></body></html>`;
