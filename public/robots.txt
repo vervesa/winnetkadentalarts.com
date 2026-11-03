@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /thank-you/
+Disallow: /privacy-policy/
+Disallow: /terms-of-service/
+Disallow: /api/
+
+Sitemap: https://www.winnetkadentalarts.com/sitemap.xml

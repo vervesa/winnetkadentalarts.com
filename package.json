@@ -1,0 +1,12 @@
+{
+  "name": "winnetkadentalarts.com",
+  "private": true,
+  "description": "Winnetka Dental Arts — static site on Cloudflare Workers",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  }
+}

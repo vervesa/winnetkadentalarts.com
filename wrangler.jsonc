@@ -1,0 +1,35 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "winnetkadentalarts-com",
+  "main": "src/index.js",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true },
+  "workers_dev": true,
+
+  "vars": {
+    "NOTIFY_FROM": "website@winnetkadentalarts.com",
+    "NOTIFY_TO": "info@wargadds.com"
+  }
+
+  // ---- Go-live -------------------------------------------------------------
+  // Uncomment to attach the custom domains. Cloudflare creates the DNS records
+  // automatically, which replaces whatever currently answers for the domain
+  // (the WordPress site). The Worker redirects the apex to www.
+  // "routes": [
+  //   { "pattern": "www.winnetkadentalarts.com", "custom_domain": true },
+  //   { "pattern": "winnetkadentalarts.com", "custom_domain": true }
+  // ],
+
+  // ---- Appointment form e-mail ---------------------------------------------
+  // 1. Cloudflare dashboard -> winnetkadentalarts.com -> Email -> Email Routing: enable it.
+  // 2. Destination addresses: add info@wargadds.com and click the verification e-mail.
+  // 3. Uncomment the binding below and push. Until then the form answers with
+  //    a "not connected yet, please call" page instead of silently dropping requests.
+  // "send_email": [{ "name": "APPOINTMENT_EMAIL", "destination_address": "info@wargadds.com" }]
+}
