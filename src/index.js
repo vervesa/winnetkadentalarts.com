@@ -11,6 +11,7 @@ const WWW_HOST = "www.winnetkadentalarts.com";
 const APEX_HOST = "winnetkadentalarts.com";
 const FORM_PATH = "/api/appointment-request";
 const PHONE = "(847) 441-6510";
+const PHONE_LINK = `<a href="tel:+1-847-441-6510">${PHONE}</a>`;
 
 export default {
   async fetch(request, env) {
@@ -57,7 +58,7 @@ async function handleAppointmentRequest(request, env) {
 
   if (!env.APPOINTMENT_EMAIL) {
     // Binding not enabled yet (see wrangler.jsonc). Say so rather than lose the request.
-    return page("Online requests aren't connected yet.", `Please call the office at ${PHONE} to request an appointment.`, 503);
+    return page("Online requests aren't connected yet.", `Please call the office at ${PHONE_LINK} to request an appointment.`, 503);
   }
 
   const submitted = new Date();
@@ -95,7 +96,7 @@ async function handleAppointmentRequest(request, env) {
     await env.APPOINTMENT_EMAIL.send(new EmailMessage(env.NOTIFY_FROM, env.NOTIFY_TO, raw));
   } catch (err) {
     console.error("appointment e-mail failed", err);
-    return page("We couldn't send your request.", `Please call the office at ${PHONE} to request an appointment.`, 502);
+    return page("We couldn't send your request.", `Please call the office at ${PHONE_LINK} to request an appointment.`, 502);
   }
 
   return Response.redirect(new URL("/thank-you/", request.url).toString(), 303);
