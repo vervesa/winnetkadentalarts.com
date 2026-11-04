@@ -93,6 +93,43 @@
     track.addEventListener("scroll", update, { passive: true });
     window.addEventListener("resize", update);
     update();
+
+    /* Autoplay: one card every few seconds, back to the start after the last. It waits while the
+       slider is hovered, focused or touched, restarts its countdown after the visitor scrolls or
+       uses an arrow, and stays still while the tab is hidden, while the slider is off screen, and
+       for visitors who prefer reduced motion. */
+    var AUTOPLAY_MS = 4000;
+    var timer = null, held = false, onScreen = true, programmatic = false;
+    function advance() {
+      if (held || !onScreen || document.hidden) return;
+      var max = track.scrollWidth - track.clientWidth;
+      programmatic = true;
+      if (track.scrollLeft >= max - 2) track.scrollTo({ left: 0, behavior: "smooth" });
+      else track.scrollBy({ left: step(), behavior: "smooth" });
+      setTimeout(function () { programmatic = false; }, 900);
+    }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function start() {
+      stop();
+      if (!reducedMotion && total > perView()) timer = setInterval(advance, AUTOPLAY_MS);
+    }
+    function hold() { held = true; }
+    function release() { held = false; start(); }
+    slider.addEventListener("pointerenter", hold);
+    slider.addEventListener("pointerleave", release);
+    slider.addEventListener("focusin", hold);
+    slider.addEventListener("focusout", release);
+    slider.addEventListener("touchstart", hold, { passive: true });
+    slider.addEventListener("touchend", release, { passive: true });
+    track.addEventListener("scroll", function () { if (!programmatic) start(); }, { passive: true });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) start(); });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        onScreen = entries[0].isIntersecting;
+        if (onScreen) start(); else stop();
+      }, { threshold: 0.25 }).observe(slider);
+    }
+    start();
   });
 
   var videos = document.querySelectorAll(".video[data-video]");

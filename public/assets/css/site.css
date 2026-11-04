@@ -575,6 +575,11 @@ figure { margin: 0; }
   -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
 .slider-track::-webkit-scrollbar { display: none; }
+/* The cards at either end fade slightly into the band, so the row reads as a continuous rotation. */
+.slider-track {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
+}
 .slider-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 .slide { flex: 0 0 calc((100% - (var(--per-view) - 1) * var(--slide-gap)) / var(--per-view)); margin: 0; scroll-snap-align: start; display: flex; }
 @media (min-width: 560px) { .slider-track { --per-view: 2; } }
