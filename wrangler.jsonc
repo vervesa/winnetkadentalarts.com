@@ -23,17 +23,17 @@
 
   "vars": {
     "NOTIFY_FROM": "website@winnetkadentalarts.com",
-    "NOTIFY_TO": "info@wargadds.com"
-  }
+    "NOTIFY_TO": "office@wargadds.com"
+  },
+
+  // ---- Appointment form e-mail ---------------------------------------------
+  // Email Routing is enabled on the zone and the office address is a verified
+  // destination. The binding is not pinned to one address, so NOTIFY_TO can be
+  // changed to any other verified destination without touching the binding.
+  "send_email": [{ "name": "APPOINTMENT_EMAIL" }]
 
   // ---- Domains ---------------------------------------------------------------
   // Both hostnames are attached as custom domains (see "routes" above); the
   // Worker runs first for every request and redirects the apex to www.
 
-  // ---- Appointment form e-mail ---------------------------------------------
-  // 1. Cloudflare dashboard -> winnetkadentalarts.com -> Email -> Email Routing: enable it.
-  // 2. Destination addresses: add info@wargadds.com and click the verification e-mail.
-  // 3. Uncomment the binding below and push. Until then the form answers with
-  //    a "not connected yet, please call" page instead of silently dropping requests.
-  // "send_email": [{ "name": "APPOINTMENT_EMAIL", "destination_address": "info@wargadds.com" }]
 }
