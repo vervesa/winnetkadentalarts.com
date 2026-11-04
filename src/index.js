@@ -8,7 +8,7 @@
  * - serves the practice's live Google reviews (GET /api/reviews, see reviews.js)
  */
 
-import { handleReviews } from "./reviews.js";
+import { handleReviews, cachedReviews, renderReviews, reviewsVersion } from "./reviews.js";
 
 const WWW_HOST = "www.winnetkadentalarts.com";
 const APEX_HOST = "winnetkadentalarts.com";
@@ -36,9 +36,45 @@ export default {
       return handleAppointmentRequest(request, env, ctx);
     }
 
-    return env.ASSETS.fetch(request);
+    return serveAsset(request, env);
   },
 };
+
+/* Static assets, with the live Google reviews written into HTML pages on the way out.
+ *
+ * A page's quote slots are filled from the reviews this data center has cached (see
+ * reviews.js); with nothing cached the page goes out as written and the script fills them.
+ * Because the body then depends on the reviews as well as the file, the ETag gains a suffix
+ * for the review set, and the conditional-request dance is done here instead of by the assets
+ * binding (which only knows the file's own tag). */
+async function serveAsset(request, env) {
+  const inm = request.headers.get("If-None-Match") || "";
+  let assetRequest = request;
+  if (/\+r[0-9a-z]+"$/.test(inm)) {
+    // one of our composite tags: let the binding return the full file and compare below
+    const headers = new Headers(request.headers);
+    headers.delete("If-None-Match");
+    headers.delete("If-Modified-Since");
+    assetRequest = new Request(request, { headers });
+  }
+  const asset = await env.ASSETS.fetch(assetRequest);
+  if (request.method !== "GET" || asset.status !== 200 || !/text\/html/i.test(asset.headers.get("Content-Type") || "")) {
+    return asset;
+  }
+  const data = await cachedReviews(request.url);
+  if (!data) return asset;
+
+  const fileTag = (asset.headers.get("ETag") || "").replace(/^W\//, "").replace(/"/g, "");
+  const etag = fileTag ? `W/"${fileTag}+r${reviewsVersion(data)}"` : "";
+  if (etag && inm === etag) {
+    return new Response(null, { status: 304, headers: { ETag: etag, "Cache-Control": asset.headers.get("Cache-Control") || "public, max-age=0, must-revalidate" } });
+  }
+  const transformed = renderReviews(asset, data, new URL(request.url).pathname);
+  const rendered = new Response(transformed.body, transformed);
+  rendered.headers.delete("Content-Length"); // the body is streamed and no longer the file's length
+  if (etag) rendered.headers.set("ETag", etag);
+  return rendered;
+}
 
 async function handleAppointmentRequest(request, env, ctx) {
   let form;

@@ -1,9 +1,12 @@
 // Live Google reviews — page side.
 //
-// Fills the site's existing quote slots in place with live reviews from
-// GET /api/reviews (see src/reviews.js in the Worker), one fetch per page.
-// The static quote already in each slot is the fallback: it stays until a
-// live review that passes the filter arrives, so nothing ever shows empty.
+// Normally the Worker has already written the live reviews into the page's quote
+// slots as it served the HTML (src/reviews.js), marking them data-reviews-live, and
+// there is nothing left to do here. When it could not (its cache of the reviews was
+// empty), this script fills the slots in place from GET /api/reviews, one fetch per
+// page; that request also fills the cache for the next visitor. The static quote
+// already in each slot is the fallback: it stays until a live review that passes
+// the filter arrives, so nothing ever shows empty.
 //
 //   <blockquote class="hero-quote" data-reviews="hero" data-reviews-max-chars="200">
 //       one review in the hero treatment (keeps the static quote inside as fallback)
@@ -24,13 +27,13 @@
 (function () {
   'use strict';
 
-  var roots = document.querySelectorAll('[data-reviews]');
-  if (!roots.length || !window.fetch) return;
+  var roots = document.querySelectorAll('[data-reviews]:not([data-reviews-live])');
+  if (!roots.length || !window.fetch) return; // the Worker already filled every slot (or there are none)
 
   var pageHash = fnv1a(location.pathname.replace(/index\.html$/, ''));
   var rotating = 0; // how many page-rotating slots have been filled so far on this page
 
-  fetch('/api/reviews', { credentials: 'same-origin' }) // matches the <link rel="preload"> in the page head
+  fetch('/api/reviews', { credentials: 'same-origin' })
     .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
     .then(function (data) {
       Array.prototype.forEach.call(roots, function (root) { render(root, data); });

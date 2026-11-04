@@ -81,14 +81,20 @@
       slider.classList.add("is-looping");
     }
 
-    function gap() { return parseFloat(getComputedStyle(track).columnGap) || 0; }
-    function step() {
+    // Measured once and after resizes (not every frame): reading sizes right after writing styles
+    // would force the browser to lay the page out again each time.
+    var stepPx = 0, loopPx = 0, viewN = 1;
+    function measure() {
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
       var first = track.children[0];
-      return first ? first.getBoundingClientRect().width + gap() : track.clientWidth;
+      stepPx = first ? first.getBoundingClientRect().width + gap : track.clientWidth;
+      loopPx = stepPx * total;
+      // the last visible slide needs no trailing gap, so count the gap once more than the slides
+      viewN = Math.max(1, Math.floor((track.clientWidth + gap + 1) / stepPx));
     }
-    function loopWidth() { return step() * total; }
-    // the last visible slide needs no trailing gap, so count the gap once more than the slides
-    function perView() { return Math.max(1, Math.floor((track.clientWidth + gap() + 1) / step())); }
+    function step() { return stepPx; }
+    function loopWidth() { return loopPx; }
+    function perView() { return viewN; }
 
     function update() {
       var x = track.scrollLeft;
@@ -134,7 +140,9 @@
     prev.addEventListener("click", function () { go(-1); });
     next.addEventListener("click", function () { go(1); });
     track.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
+    window.addEventListener("resize", function () { measure(); update(); });
+    window.addEventListener("load", function () { measure(); update(); });
+    measure();
     update();
 
     if (!loop) return;
