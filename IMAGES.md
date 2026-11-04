@@ -22,7 +22,7 @@ Look for every stock image: natural light, warm neutrals (ivory, camel, oatmeal,
 | # | Page / slot | Subject | Crop | Deliver at least | Source |
 |---|-------------|---------|------|------------------|--------|
 | 9 | Dr. Warga page portrait (`.portrait`) | Proper headshot — currently a 500×500 file scaled up, the weakest image on the site | **4:5 arch** | 1200 × 1500 | Shoot |
-| 10 | Our Office | **Done:** top photo = Galleria entrance with planters (IMG_1135, 3:2; also the og:image on inner pages); strip = our entrance vestibule (IMG_1103), reception (IMG_1108, 3:2), treatment room (IMG_1177); sterilization center (IMG_1122) replaces the placeholder | 3:2 | — | Shot by the office |
+| 10 | Our Office | **Done:** top photo = Galleria entrance with planters (IMG_1135, 3:2; also the og:image on inner pages); strip = our entrance vestibule (IMG_1103), reception (IMG_1108, 3:2), waiting room (IMG_1152); the large photo under it is the treatment room (IMG_1179, 3:2) — Luke: highlight the treatment room, not the sterilization area | 3:2 | — | Shot by the office |
 | 11 | Prosthetics (Reconstruction), wide plate | Porcelain crowns and a bridge on a lab model, soft window light — or a couple in their 60s laughing together | 2:1 / 3:2 | 1600 × 1067 | Stock |
 | 12 | Dental Implants, wide plate | Implant and ceramic crown on a neutral stone surface, macro — or a confident man, 60s, smiling | 2:1 / 3:2 | 1600 × 1067 | Stock |
 | 13 | Aesthetics, wide plate | Porcelain veneers on a ceramic tray, macro — or a second (different) young woman smiling, candid | 2:1 / 3:2 | 1600 × 1067 | Stock |

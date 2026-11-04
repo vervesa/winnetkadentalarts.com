@@ -233,21 +233,6 @@
     "sizes": "(max-width: 640px) 50vw, 380px",
     "alt": "A treatment room at Winnetka Dental Arts"
   },
-  "office-operatory": {
-    "src": "office-operatory.jpg",
-    "ratio": "3:2",
-    "focus": [
-      0.5,
-      0.55
-    ],
-    "widths": [
-      520,
-      780,
-      1040
-    ],
-    "sizes": "(max-width: 640px) 100vw, 260px",
-    "alt": "A treatment room at Winnetka Dental Arts"
-  },
   "office-vestibule": {
     "src": "office-vestibule.jpg",
     "ratio": "3:2",
@@ -263,8 +248,23 @@
     "sizes": "(max-width: 640px) 100vw, 260px",
     "alt": "The entrance to Winnetka Dental Arts on the lower level of the Winnetka Galleria"
   },
-  "office-sterilization": {
-    "src": "office-sterilization.jpg",
+  "office-waiting": {
+    "src": "office-waiting.jpg",
+    "ratio": "3:2",
+    "focus": [
+      0.5,
+      0.5
+    ],
+    "widths": [
+      520,
+      780,
+      1040
+    ],
+    "sizes": "(max-width: 640px) 100vw, 260px",
+    "alt": "The waiting room at Winnetka Dental Arts"
+  },
+  "office-operatory-wide": {
+    "src": "office-operatory-arch.jpg",
     "ratio": "3:2",
     "focus": [
       0.5,
@@ -277,6 +277,6 @@
       1560
     ],
     "sizes": "(max-width: 900px) 100vw, 780px",
-    "alt": "The sterilization center at Winnetka Dental Arts"
+    "alt": "A treatment room at Winnetka Dental Arts, with the brick wall and garden window"
   }
 }
