@@ -670,3 +670,7 @@ figure { margin: 0; }
 /* Turnstile slot in the appointment forms: no height until the widget renders. */
 .turnstile:empty { display: none; }
 .turnstile { margin: 0.25rem 0 1rem; }
+
+/* Jumping to #request (the "Book Appointment" links) lands with the form's heading in view,
+   not scrolled off the top. */
+#request, #home-request { scroll-margin-top: 6rem; }

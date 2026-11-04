@@ -183,7 +183,7 @@
         TURNSTILE_SITE_KEY comes from the Cloudflare dashboard (Turnstile -> the widget for
         winnetkadentalarts.com). Until it is set, the forms work without the check. The matching
         secret key lives on the Worker as the TURNSTILE_SECRET secret. */
-  var TURNSTILE_SITE_KEY = "";
+  var TURNSTILE_SITE_KEY = "0x4AAAAAAFy8LR2AKb7FYgjE";
   var forms = document.querySelectorAll('form[action="/api/appointment-request"]');
   Array.prototype.forEach.call(forms, function (form) {
     var button = form.querySelector('button[type="submit"]');
