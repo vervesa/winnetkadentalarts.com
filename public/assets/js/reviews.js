@@ -134,8 +134,20 @@
       img.onerror = function () { img.remove(); }; // no blank gap if Google's image host is slow or blocked
       parent.appendChild(img);
     }
-    parent.appendChild(r.author.url ? link(r.author.url, r.author.name || '', 'gq-name') : el('span', 'gq-name', r.author.name || ''));
+    var shown = shortName(r.author.name || '');
+    parent.appendChild(r.author.url ? link(r.author.url, shown, 'gq-name') : el('span', 'gq-name', shown));
   }
+
+  // "Michelle Laughlin" -> "Michelle L."; a one-word name stays as it is. The avatar and the
+  // profile link still credit the full author, as Google's display rules ask.
+  function shortName(name) {
+    var parts = name.replace(/\s+/g, ' ').trim().split(' ');
+    if (parts.length < 2) return cap(name.trim());
+    var last = parts[parts.length - 1];
+    var first = parts.slice(0, -1).map(cap).join(' ');
+    return /^[A-Za-z\u00C0-\u024F]/.test(last) ? first + ' ' + last.charAt(0).toUpperCase() + '.' : first;
+  }
+  function cap(word) { return word.charAt(0).toUpperCase() + word.slice(1); }
 
   // The marker line: ordering/filter notice, Google Maps attribution, link to the review.
   function meta(r, lead) {
