@@ -13,7 +13,11 @@
 //       every review that passed, as the reviews page's own list items
 //
 //   data-reviews-max-chars="200"   a tighter text cap for this slot than the Worker's MAX_CHARS
-//   data-reviews-index="1"         for a single-quote slot: show the 2nd newest instead of the newest
+//   data-reviews-index="0"         pin a single-quote slot to a position in the newest-first list
+//                                  (0 = newest). Without it the slot rotates by page: each page
+//                                  starts at a different review (a hash of its path), and further
+//                                  rotating slots on the same page take the next ones, so no page
+//                                  repeats a review and neighbouring pages differ.
 //   data-reviews-max="3"           cap the count in a list slot (omit: all that passed)
 //   data-reviews-notice="page"     an element that gets the ordering/filter notice for that list
 //   data-reviews-rating / data-reviews-count   elements that get the live average and count
@@ -22,6 +26,9 @@
 
   var roots = document.querySelectorAll('[data-reviews]');
   if (!roots.length || !window.fetch) return;
+
+  var pageHash = fnv1a(location.pathname.replace(/index\.html$/, ''));
+  var rotating = 0; // how many page-rotating slots have been filled so far on this page
 
   fetch('/api/reviews', { headers: { Accept: 'application/json' } })
     .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
@@ -51,22 +58,42 @@
         notice.appendChild(document.createTextNode(', newest first.'));
       }
     } else {
-      var index = parseInt(root.getAttribute('data-reviews-index'), 10) || 0;
-      if (!eligible[index]) return;
-      fillQuote(root, eligible[index], index);
+      var n = eligible.length;
+      if (!n) return;
+      var pinned = root.getAttribute('data-reviews-index');
+      var index;
+      if (pinned !== null) {
+        index = parseInt(pinned, 10) || 0;
+        if (index >= n) return; // nothing that far down the list yet: keep the static quote
+      } else {
+        var ordinal = rotating++;
+        if (ordinal >= n) return; // more rotating slots than reviews: keep the static quote, never repeat one
+        index = (pageHash + ordinal) % n;
+      }
+      fillQuote(root, eligible[index], index === 0);
     }
     root.setAttribute('data-reviews-live', '');
   }
 
   // Hero and sidebar: the slot is the blockquote itself.
-  function fillQuote(root, r, index) {
+  function fillQuote(root, r, isNewest) {
     root.textContent = '';
     if (r.url) root.setAttribute('cite', r.url);
     root.appendChild(el('p', null, '“' + r.text + '”'));
     var foot = document.createElement('footer');
     appendAuthor(foot, r);
-    foot.appendChild(meta(r, index ? 'Recent brief five-star review on ' : 'Newest brief five-star review on '));
+    foot.appendChild(meta(r, isNewest ? 'Newest brief five-star review on ' : 'Recent brief five-star review on '));
     root.appendChild(foot);
+  }
+
+  // Stable per-path number (FNV-1a) so a page always starts at the same review.
+  function fnv1a(s) {
+    var h = 2166136261;
+    for (var i = 0; i < s.length; i++) {
+      h ^= s.charCodeAt(i);
+      h = Math.imul(h, 16777619) >>> 0;
+    }
+    return h;
   }
 
   // Reviews page: same markup as the page's own list items.
