@@ -402,12 +402,17 @@ sup { font-size: 0.6em; line-height: 0; }
 .offset-figure img, .offset-figure .placeholder { position: relative; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 
 /* Photo strip — arched on the home page */
-.photo-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); margin-top: calc(var(--block) + 1rem); }
+.photo-strip { --strip-gap: clamp(16px, 2.4vw, 28px); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--strip-gap); margin-top: calc(var(--block) + 1rem); }
 .photo-strip figure { margin: 0; }
 .photo-strip img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
 .photo-strip.arches img { aspect-ratio: 3 / 4; border-radius: var(--arch); }
 .photo-strip figcaption { font-family: var(--sans); font-size: 0.6875rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mute); text-align: center; margin-top: 0.8rem; }
-@media (max-width: 640px) { .photo-strip { grid-template-columns: 1fr; } .photo-strip.arches { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .photo-strip { grid-template-columns: 1fr; }
+  .photo-strip.arches { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* Three arches on a phone: one centred on top and two below, rather than two and an orphan. */
+  .photo-strip.arches figure:first-child:nth-last-child(3) { grid-column: 1 / -1; width: calc(50% - var(--strip-gap) / 2); justify-self: center; }
+}
 
 /* ---------- Services index (numbered, on navy) ---------- */
 .services-index {

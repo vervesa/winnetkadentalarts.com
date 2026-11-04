@@ -174,7 +174,7 @@
     "alt": "The entrance to the Winnetka Galleria Building at 570 Lincoln Avenue"
   },
   "office-entrance-arch": {
-    "src": "office-entrance-front.jpg",
+    "src": "office-exterior.jpg",
     "ratio": "3:4",
     "focus": [
       0.5,
@@ -186,8 +186,8 @@
       1140
     ],
     "sizes": "(max-width: 640px) 50vw, 380px",
-    "alt": "The commercial entrance to the Winnetka Galleria at 568-570 Lincoln Avenue, with Winnetka Dental Arts on the door",
-    "version": 2
+    "alt": "The courtyard entrance to the Winnetka Galleria Building at 570 Lincoln Avenue, home of Winnetka Dental Arts",
+    "version": 3
   },
   "office-rear-entrance": {
     "src": "office-entrance.jpg",
@@ -248,7 +248,7 @@
     ],
     "sizes": "(max-width: 640px) 50vw, 380px",
     "alt": "A treatment room at Winnetka Dental Arts",
-    "version": 3
+    "version": 4
   },
   "office-vestibule": {
     "src": "office-vestibule.jpg",
