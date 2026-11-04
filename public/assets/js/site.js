@@ -185,8 +185,49 @@
         secret key lives on the Worker as the TURNSTILE_SECRET secret. */
   var TURNSTILE_SITE_KEY = "0x4AAAAAAFy8LR2AKb7FYgjE";
   var forms = document.querySelectorAll('form[action="/api/appointment-request"]');
+  // Name: letters (any script), spaces, hyphens, apostrophes, periods; at least two letters.
+  function nameProblem(value) {
+    var v = value.trim();
+    if (!v) return "";
+    if ((v.match(/\p{L}/gu) || []).length < 2) return "Please enter at least two letters.";
+    if (!/^[\p{L}][\p{L}'\u2019 .\-]*$/u.test(v)) return "Please use letters only (spaces, hyphens and apostrophes are fine).";
+    return "";
+  }
+  // Phone: 10 digits, optional leading 1, hyphens only after the 1, the area code and the exchange.
+  // Spaces, dots, parentheses and a leading + are dropped as they are typed.
+  function cleanPhone(value) { return value.replace(/^\+/, "").replace(/[\s().]/g, ""); }
+  function phoneDigits(value) {
+    var v = cleanPhone(value);
+    if (!/^(1-?)?[2-9]\d{2}-?[2-9]\d{2}-?\d{4}$/.test(v)) return "";
+    var d = v.replace(/\D/g, "").replace(/^1(?=\d{10}$)/, "");
+    return /^(\d)\1{9}$/.test(d) ? "" : d;
+  }
+  function phoneProblem(value) {
+    var v = cleanPhone(value);
+    if (!v) return "";
+    if (/[^\d-]/.test(v)) return "Digits only, please (hyphens are fine), like 847-441-6510.";
+    return phoneDigits(v) ? "" : "Please enter a 10-digit phone number, like 847-441-6510.";
+  }
   Array.prototype.forEach.call(forms, function (form) {
     var button = form.querySelector('button[type="submit"]');
+    var nameField = form.querySelector('[name="name"]');
+    var phoneField = form.querySelector('[name="phone"]');
+    if (nameField) {
+      nameField.addEventListener("input", function () { nameField.setCustomValidity(nameProblem(nameField.value)); });
+      nameField.addEventListener("change", function () { nameField.value = nameField.value.replace(/\s+/g, " ").trim(); });
+    }
+    if (phoneField) {
+      phoneField.addEventListener("input", function () {
+        var cleaned = cleanPhone(phoneField.value);
+        if (cleaned !== phoneField.value) phoneField.value = cleaned;
+        phoneField.setCustomValidity(phoneProblem(phoneField.value));
+      });
+      phoneField.addEventListener("change", function () {
+        var d = phoneDigits(phoneField.value);
+        if (d) phoneField.value = d.slice(0, 3) + "-" + d.slice(3, 6) + "-" + d.slice(6);
+        phoneField.setCustomValidity(phoneProblem(phoneField.value));
+      });
+    }
     form.addEventListener("submit", function (event) {
       if (form.getAttribute("data-submitting")) { event.preventDefault(); return; }
       form.setAttribute("data-submitting", "1");

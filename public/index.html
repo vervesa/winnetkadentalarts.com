@@ -173,8 +173,8 @@
       </div>
       <form class="form" id="home-request" action="/api/appointment-request" method="post">
   <div class="row-2">
-    <div><label for="home-request-name">Patient Name*</label><input id="home-request-name" name="name" type="text" autocomplete="name" required></div>
-    <div><label for="home-request-phone">Phone Number*</label><input id="home-request-phone" name="phone" type="tel" autocomplete="tel" required></div>
+    <div><label for="home-request-name">Patient Name*</label><input id="home-request-name" name="name" type="text" autocomplete="name" required minlength="2" maxlength="120" pattern="[\p{L}][\p{L}'\u2019 .\-]*" title="Letters, spaces, hyphens and apostrophes; at least two letters"></div>
+    <div><label for="home-request-phone">Phone Number*</label><input id="home-request-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required maxlength="14" pattern="(1-?)?[2-9][0-9]{2}-?[2-9][0-9]{2}-?[0-9]{4}" placeholder="847-441-6510" title="10-digit phone number, like 847-441-6510"></div>
   </div>
   <div class="row-2">
     <div><label for="home-request-email">Email Address*</label><input id="home-request-email" name="email" type="email" autocomplete="email" required></div>
