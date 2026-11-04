@@ -3,8 +3,8 @@
     "src": "hero.jpg",
     "ratio": "4:5",
     "focus": [
-      0.5,
-      0.4
+      0.24,
+      0.5
     ],
     "widths": [
       480,
@@ -13,14 +13,14 @@
     ],
     "sizes": "(max-width: 900px) min(100vw, 420px), 500px",
     "eager": true,
-    "alt": ""
+    "alt": "A woman with a bright, natural smile"
   },
   "og-hero": {
     "src": "hero.jpg",
     "ratio": "1.91:1",
     "focus": [
-      0.5,
-      0.35
+      0.0,
+      0.3
     ],
     "widths": [
       1200

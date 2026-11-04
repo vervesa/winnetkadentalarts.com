@@ -8,14 +8,14 @@ Look for every stock image: natural light, warm neutrals (ivory, camel, oatmeal,
 
 | # | Slot | Subject | Crop the site uses | Deliver at least | Source |
 |---|------|---------|--------------------|------------------|--------|
-| 1 | Hero (`.hero-media`, right of the headline) | **A young woman with a natural, open smile, like naplesdentalarts.com** — close crop, chin or hand near the face, knitwear or a crisp shirt, soft light, plain warm background | Portrait **4:5 arch**, 500 px wide on desktop / 420 on phones, face in the upper half (`object-position 50% 45%`) | **1600 × 2000** (portrait) | Stock — candidates below |
+| 1 | Hero (`.hero-media`, right of the headline) | **Done (Nov 4):** young woman, brown hair, white tee, natural smile — the stock photo Luke supplied (2576×1718 original in `src/hero.jpg`, cropped 4:5 at focus 0.24/0.5 by `tools/images.mjs`; keep the license record with the practice) | Portrait **4:5 arch**, 500 px wide on desktop / 420 on phones | — | Stock, licensed |
 | 2 | "Our practice" plate (`.offset-figure`, currently the molar drawing) | Dr. Warga and Jeanne together, relaxed, in the office | **5:4** landscape | 2000 × 1600 | Shoot |
 | 3 | Photo strip, arch 1 | Reception — the stained-glass window side | **3:4 arch** (portrait) | 1200 × 1600 | Shoot, portrait orientation (the current 900×600 landscape files lose most of the frame in the arch) |
 | 4 | Photo strip, arch 2 | A treatment room, tidy, daylight | 3:4 arch | 1200 × 1600 | Shoot |
 | 5 | Photo strip, arch 3 | Galleria Building entrance / façade | 3:4 arch | 1200 × 1600 | Shoot (the exterior leaves the hero and lives here) |
 | 6 | Dr. Warga section (`.doctor-media`) | Dr. Warga chairside or at the microscope, candid | **5:6 arch**, face toward the top (`object-position 38% 12%`) | 1250 × 1500 | Shoot |
 | 7 | "Pleasure in the Job" feature | Magazine cover — have it | — | — | Done |
-| 8 | Social preview (`og:image`, shows when the link is texted or shared) | Landscape crop of the hero image | **1200 × 630** | from #1 | Made from #1 |
+| 8 | Social preview (`og:image`, shows when the link is texted or shared) | **Done:** 1.91:1 crop of the hero (`og-hero.jpg`, 1200×628) | **1200 × 628** | — | Made from #1 |
 
 ## Inner pages
 
