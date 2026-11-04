@@ -28,50 +28,6 @@
     "sizes": "1200px",
     "alt": ""
   },
-  "practice": {
-    "src": "practice.jpg",
-    "ratio": "5:4",
-    "widths": [
-      560,
-      800,
-      1120
-    ],
-    "sizes": "(max-width: 900px) 100vw, 560px",
-    "alt": "Dr. George F. Warga and Jeanne at Winnetka Dental Arts"
-  },
-  "office-reception": {
-    "src": "office-reception.jpg",
-    "ratio": "3:4",
-    "widths": [
-      400,
-      760,
-      1140
-    ],
-    "sizes": "(max-width: 640px) 50vw, 380px",
-    "alt": "Reception at Winnetka Dental Arts"
-  },
-  "office-operatory": {
-    "src": "office-operatory.jpg",
-    "ratio": "3:4",
-    "widths": [
-      400,
-      760,
-      1140
-    ],
-    "sizes": "(max-width: 640px) 50vw, 380px",
-    "alt": "A treatment room at Winnetka Dental Arts"
-  },
-  "office-exterior": {
-    "src": "office-exterior.jpg",
-    "ratio": "3:4",
-    "widths": [
-      400,
-      760,
-      1140
-    ],
-    "sizes": "(max-width: 640px) 50vw, 380px",
-    "alt": "The entrance to the Winnetka Galleria Building at 570 Lincoln Avenue"
-  },
   "dr-warga-operatory": {
     "src": "dr-warga-operatory.jpg",
     "ratio": "5:6",
@@ -101,18 +57,6 @@
     ],
     "sizes": "(max-width: 640px) 100vw, 560px",
     "alt": "George F. Warga, DDS"
-  },
-  "office-sterilization": {
-    "src": "office-sterilization.jpg",
-    "ratio": "2:1",
-    "widths": [
-      640,
-      960,
-      1280,
-      1560
-    ],
-    "sizes": "(max-width: 900px) 100vw, 780px",
-    "alt": "The sterilization center at Winnetka Dental Arts"
   },
   "services/prosthetics-reconstruction": {
     "src": "services/prosthetics-reconstruction.jpg",
@@ -197,5 +141,142 @@
     ],
     "sizes": "(max-width: 900px) 100vw, 780px",
     "alt": ""
+  },
+  "practice": {
+    "src": "practice.jpg",
+    "ratio": "1:1",
+    "focus": [
+      0.5,
+      0.22
+    ],
+    "widths": [
+      560,
+      800,
+      1120
+    ],
+    "sizes": "(max-width: 900px) 100vw, 560px",
+    "alt": "The Winnetka Galleria Building courtyard at 570 Lincoln Avenue, home of Winnetka Dental Arts"
+  },
+  "office-exterior": {
+    "src": "office-exterior.jpg",
+    "ratio": "3:2",
+    "focus": [
+      0.5,
+      0.5
+    ],
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": "The entrance to the Winnetka Galleria Building at 570 Lincoln Avenue"
+  },
+  "office-entrance-arch": {
+    "src": "office-entrance.jpg",
+    "ratio": "3:4",
+    "focus": [
+      0.42,
+      0.5
+    ],
+    "widths": [
+      400,
+      760,
+      1140
+    ],
+    "sizes": "(max-width: 640px) 50vw, 380px",
+    "alt": "The brick entrance arch of the Winnetka Galleria at 570 Lincoln Avenue"
+  },
+  "office-reception-arch": {
+    "src": "office-reception.jpg",
+    "ratio": "3:4",
+    "focus": [
+      0.64,
+      0.5
+    ],
+    "widths": [
+      400,
+      760,
+      1140
+    ],
+    "sizes": "(max-width: 640px) 50vw, 380px",
+    "alt": "Reception at Winnetka Dental Arts, with the stained-glass door beside the front desk"
+  },
+  "office-reception": {
+    "src": "office-reception.jpg",
+    "ratio": "3:2",
+    "focus": [
+      0.5,
+      0.6
+    ],
+    "widths": [
+      520,
+      780,
+      1040
+    ],
+    "sizes": "(max-width: 640px) 100vw, 260px",
+    "alt": "Reception at Winnetka Dental Arts"
+  },
+  "office-operatory-arch": {
+    "src": "office-operatory-arch.jpg",
+    "ratio": "3:4",
+    "focus": [
+      0.5,
+      0.5
+    ],
+    "widths": [
+      400,
+      760,
+      1140
+    ],
+    "sizes": "(max-width: 640px) 50vw, 380px",
+    "alt": "A treatment room at Winnetka Dental Arts"
+  },
+  "office-operatory": {
+    "src": "office-operatory.jpg",
+    "ratio": "3:2",
+    "focus": [
+      0.5,
+      0.55
+    ],
+    "widths": [
+      520,
+      780,
+      1040
+    ],
+    "sizes": "(max-width: 640px) 100vw, 260px",
+    "alt": "A treatment room at Winnetka Dental Arts"
+  },
+  "office-vestibule": {
+    "src": "office-vestibule.jpg",
+    "ratio": "3:2",
+    "focus": [
+      0.5,
+      0.5
+    ],
+    "widths": [
+      520,
+      780,
+      1040
+    ],
+    "sizes": "(max-width: 640px) 100vw, 260px",
+    "alt": "The entrance to Winnetka Dental Arts on the lower level of the Winnetka Galleria"
+  },
+  "office-sterilization": {
+    "src": "office-sterilization.jpg",
+    "ratio": "3:2",
+    "focus": [
+      0.5,
+      0.5
+    ],
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": "The sterilization center at Winnetka Dental Arts"
   }
 }

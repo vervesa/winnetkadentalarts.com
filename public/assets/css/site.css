@@ -399,7 +399,7 @@ sup { font-size: 0.6em; line-height: 0; }
 /* Photo with a navy block offset behind it */
 .offset-figure { margin: 0; position: relative; padding: 0 0 22px 22px; }
 .offset-figure::before { content: ""; position: absolute; top: 22px; left: 0; right: 22px; bottom: 0; background: var(--navy); }
-.offset-figure img, .offset-figure .placeholder { position: relative; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
+.offset-figure img, .offset-figure .placeholder { position: relative; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
 
 /* Photo strip — arched on the home page */
 .photo-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2.4vw, 28px); margin-top: calc(var(--block) + 1rem); }

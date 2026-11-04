@@ -1,6 +1,6 @@
 # winnetkadentalarts.com — image shot list
 
-What the site still needs, slot by slot, with the exact size and crop each slot uses. "Shoot" = a real photo of the practice (always better than stock where the subject is the practice itself); "Stock" = Adobe Stock, Standard license (covers web use; no "Editorial use only" assets; leave "Generative AI" excluded). Hand over originals at full resolution — the build makes the WebP/AVIF and responsive sizes, so never pre-shrink.
+What the site still needs, slot by slot, with the exact size and crop each slot uses. "Shoot" = a real photo of the practice (always better than stock where the subject is the practice itself); "Stock" = Adobe Stock, Standard license (covers web use; no "Editorial use only" assets; leave "Generative AI" excluded). Hand over originals at full resolution — the build makes the WebP/AVIF and responsive sizes, so never pre-shrink. The Nov 4 office set (IMG_1088–1179, iPhone HEIC, 12 MP) is kept with Luke; the chosen frames live in `public/assets/img/src/` downsized to 2400 px.
 
 Look for every stock image: natural light, warm neutrals (ivory, camel, oatmeal, navy, charcoal) that sit next to the site's navy and ivory; understated, well-dressed, North Shore; genuine expressions, real teeth (no retouched "whitening-ad" smiles); no clinical props, no gloved hands, no stock-dental clichés. Mix ages across the site — the hero is young; implants, prosthetics and TMD pages can carry patients in their 50s–70s.
 
@@ -9,10 +9,10 @@ Look for every stock image: natural light, warm neutrals (ivory, camel, oatmeal,
 | # | Slot | Subject | Crop the site uses | Deliver at least | Source |
 |---|------|---------|--------------------|------------------|--------|
 | 1 | Hero (`.hero-media`, right of the headline) | **Done (Nov 4):** young woman, brown hair, white tee, natural smile — the stock photo Luke supplied (2576×1718 original in `src/hero.jpg`, cropped 4:5 at focus 0.24/0.5 by `tools/images.mjs`; keep the license record with the practice) | Portrait **4:5 arch**, 500 px wide on desktop / 420 on phones | — | Stock, licensed |
-| 2 | "Our practice" plate (`.offset-figure`, currently the molar drawing) | Dr. Warga and Jeanne together, relaxed, in the office | **5:4** landscape | 2000 × 1600 | Shoot |
-| 3 | Photo strip, arch 1 | Reception — the stained-glass window side | **3:4 arch** (portrait) | 1200 × 1600 | Shoot, portrait orientation (the current 900×600 landscape files lose most of the frame in the arch) |
-| 4 | Photo strip, arch 2 | A treatment room, tidy, daylight | 3:4 arch | 1200 × 1600 | Shoot |
-| 5 | Photo strip, arch 3 | Galleria Building entrance / façade | 3:4 arch | 1200 × 1600 | Shoot (the exterior leaves the hero and lives here) |
+| 2 | "Our practice" plate (`.offset-figure`) | **Done (Nov 4):** the Galleria courtyard façade, clock tower centred (IMG_1134, square crop). Luke's call: the building, not a team photo. A photo of Dr. Warga and Jeanne could still go elsewhere later. | **1:1** | — | Shot by the office |
+| 3 | Photo strip, arch 1 | **Done:** reception desk with the stained-glass door on the right (IMG_1108, cropped 3:4 toward the glass) | 3:4 arch | — | Shot by the office |
+| 4 | Photo strip, arch 2 | **Done:** treatment room with the brick wall and garden window (IMG_1179, Luke's pick) | 3:4 arch | — | Shot by the office |
+| 5 | Photo strip, arch 3 | **Done:** the brick entrance arch of the Galleria (IMG_1130) | 3:4 arch | — | Shot by the office |
 | 6 | Dr. Warga section (`.doctor-media`) | Dr. Warga chairside or at the microscope, candid | **5:6 arch**, face toward the top (`object-position 38% 12%`) | 1250 × 1500 | Shoot |
 | 7 | "Pleasure in the Job" feature | Magazine cover — have it | — | — | Done |
 | 8 | Social preview (`og:image`, shows when the link is texted or shared) | **Done:** 1.91:1 crop of the hero (`og-hero.jpg`, 1200×628) | **1200 × 628** | — | Made from #1 |
@@ -22,7 +22,7 @@ Look for every stock image: natural light, warm neutrals (ivory, camel, oatmeal,
 | # | Page / slot | Subject | Crop | Deliver at least | Source |
 |---|-------------|---------|------|------------------|--------|
 | 9 | Dr. Warga page portrait (`.portrait`) | Proper headshot — currently a 500×500 file scaled up, the weakest image on the site | **4:5 arch** | 1200 × 1500 | Shoot |
-| 10 | Our Office, wide plate (placeholder "sterilization center and instrument tray") | Sterilization center / an instrument tray, detail, daylight | **2:1** on desktop, 3:2 on phones | 1600 × 1067 (safe for both) | Shoot (or stock "dental instruments tray sterilization pouch") |
+| 10 | Our Office | **Done:** top photo = Galleria entrance with planters (IMG_1135, 3:2; also the og:image on inner pages); strip = our entrance vestibule (IMG_1103), reception (IMG_1108, 3:2), treatment room (IMG_1177); sterilization center (IMG_1122) replaces the placeholder | 3:2 | — | Shot by the office |
 | 11 | Prosthetics (Reconstruction), wide plate | Porcelain crowns and a bridge on a lab model, soft window light — or a couple in their 60s laughing together | 2:1 / 3:2 | 1600 × 1067 | Stock |
 | 12 | Dental Implants, wide plate | Implant and ceramic crown on a neutral stone surface, macro — or a confident man, 60s, smiling | 2:1 / 3:2 | 1600 × 1067 | Stock |
 | 13 | Aesthetics, wide plate | Porcelain veneers on a ceramic tray, macro — or a second (different) young woman smiling, candid | 2:1 / 3:2 | 1600 × 1067 | Stock |
