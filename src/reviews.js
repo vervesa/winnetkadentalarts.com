@@ -80,7 +80,8 @@ function shape(r) {
     publishTime: r.publishTime,
     url: r.googleMapsUri, // this review on Google Maps
     reportUrl: r.flagContentUri, // "report a problem" for this review
-    author: a ? { name: a.displayName, url: a.uri, photo: a.photoUri } : null,
+    // the page shows the avatar at 22px, so ask Google for a 64px image instead of 128px
+    author: a ? { name: a.displayName, url: a.uri, photo: (a.photoUri || "").replace(/=s\d+-/, "=s64-") || undefined } : null,
   };
 }
 

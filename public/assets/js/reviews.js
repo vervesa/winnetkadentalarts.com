@@ -30,7 +30,7 @@
   var pageHash = fnv1a(location.pathname.replace(/index\.html$/, ''));
   var rotating = 0; // how many page-rotating slots have been filled so far on this page
 
-  fetch('/api/reviews', { headers: { Accept: 'application/json' } })
+  fetch('/api/reviews', { credentials: 'same-origin' }) // matches the <link rel="preload"> in the page head
     .then(function (res) { return res.ok ? res.json() : Promise.reject(res.status); })
     .then(function (data) {
       Array.prototype.forEach.call(roots, function (root) { render(root, data); });

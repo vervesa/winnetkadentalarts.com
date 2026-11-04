@@ -34,7 +34,7 @@
   --line-2: #e6e1d6;
   --ink: #141c2e;
   --ink-2: #3a4256;
-  --mute: #6b7284;
+  --mute: #5b6274;      /* 5.4:1 on ivory, 4.9:1 on stone (WCAG AA at any size) */
   --navy: #121a2b;
   --navy-2: #182238;
   --navy-deep: #0c1221;
@@ -157,8 +157,8 @@ sup { font-size: 0.6em; line-height: 0; }
   letter-spacing: 0.04em;
 }
 .topbar .wrap { display: flex; justify-content: space-between; gap: 1rem; min-height: 38px; align-items: center; flex-wrap: wrap; }
-.topbar a { color: var(--ivory); text-decoration: none; }
-.topbar a:hover { text-decoration: underline; }
+.topbar a { color: var(--ivory); text-decoration: underline; text-decoration-color: rgba(243, 239, 230, 0.45); text-underline-offset: 3px; }
+.topbar a:hover { text-decoration-color: var(--ivory); }
 @media (max-width: 640px) { .topbar .addr { display: none; } .topbar .wrap { justify-content: center; } }
 
 .site-header { background: var(--navy); border-bottom: 1px solid rgba(243, 239, 230, 0.08); position: relative; z-index: 20; }
