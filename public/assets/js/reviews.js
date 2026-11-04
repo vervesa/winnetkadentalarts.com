@@ -103,7 +103,8 @@
       img.alt = '';
       img.width = 22;
       img.height = 22;
-      img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.onerror = function () { img.remove(); }; // no blank gap if Google's image host is slow or blocked
       parent.appendChild(img);
     }
     parent.appendChild(r.author.url ? link(r.author.url, r.author.name || '', 'gq-name') : el('span', 'gq-name', r.author.name || ''));
