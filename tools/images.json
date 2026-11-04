@@ -1,0 +1,201 @@
+{
+  "hero": {
+    "src": "hero.jpg",
+    "ratio": "4:5",
+    "focus": [
+      0.5,
+      0.4
+    ],
+    "widths": [
+      480,
+      840,
+      1000
+    ],
+    "sizes": "(max-width: 900px) min(100vw, 420px), 500px",
+    "eager": true,
+    "alt": ""
+  },
+  "og-hero": {
+    "src": "hero.jpg",
+    "ratio": "1.91:1",
+    "focus": [
+      0.5,
+      0.35
+    ],
+    "widths": [
+      1200
+    ],
+    "sizes": "1200px",
+    "alt": ""
+  },
+  "practice": {
+    "src": "practice.jpg",
+    "ratio": "5:4",
+    "widths": [
+      560,
+      800,
+      1120
+    ],
+    "sizes": "(max-width: 900px) 100vw, 560px",
+    "alt": "Dr. George F. Warga and Jeanne at Winnetka Dental Arts"
+  },
+  "office-reception": {
+    "src": "office-reception.jpg",
+    "ratio": "3:4",
+    "widths": [
+      400,
+      760,
+      1140
+    ],
+    "sizes": "(max-width: 640px) 50vw, 380px",
+    "alt": "Reception at Winnetka Dental Arts"
+  },
+  "office-operatory": {
+    "src": "office-operatory.jpg",
+    "ratio": "3:4",
+    "widths": [
+      400,
+      760,
+      1140
+    ],
+    "sizes": "(max-width: 640px) 50vw, 380px",
+    "alt": "A treatment room at Winnetka Dental Arts"
+  },
+  "office-exterior": {
+    "src": "office-exterior.jpg",
+    "ratio": "3:4",
+    "widths": [
+      400,
+      760,
+      1140
+    ],
+    "sizes": "(max-width: 640px) 50vw, 380px",
+    "alt": "The entrance to the Winnetka Galleria Building at 570 Lincoln Avenue"
+  },
+  "dr-warga-operatory": {
+    "src": "dr-warga-operatory.jpg",
+    "ratio": "5:6",
+    "focus": [
+      0.4,
+      0.15
+    ],
+    "widths": [
+      480,
+      840,
+      960
+    ],
+    "sizes": "(max-width: 800px) min(100vw, 420px), 480px",
+    "alt": "Dr. George F. Warga in a treatment room at Winnetka Dental Arts"
+  },
+  "dr-warga": {
+    "src": "dr-warga.jpg",
+    "ratio": "4:5",
+    "focus": [
+      0.5,
+      0.2
+    ],
+    "widths": [
+      480,
+      840,
+      1120
+    ],
+    "sizes": "(max-width: 640px) 100vw, 560px",
+    "alt": "George F. Warga, DDS"
+  },
+  "office-sterilization": {
+    "src": "office-sterilization.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": "The sterilization center at Winnetka Dental Arts"
+  },
+  "services/prosthetics-reconstruction": {
+    "src": "services/prosthetics-reconstruction.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  },
+  "services/dental-implants": {
+    "src": "services/dental-implants.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  },
+  "services/aesthetics": {
+    "src": "services/aesthetics.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  },
+  "services/occlusal-function": {
+    "src": "services/occlusal-function.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  },
+  "services/sleep-apnea-airway-treatment": {
+    "src": "services/sleep-apnea-airway-treatment.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  },
+  "services/tmd": {
+    "src": "services/tmd.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  },
+  "services/child-development-nutrition": {
+    "src": "services/child-development-nutrition.jpg",
+    "ratio": "2:1",
+    "widths": [
+      640,
+      960,
+      1280,
+      1560
+    ],
+    "sizes": "(max-width: 900px) 100vw, 780px",
+    "alt": ""
+  }
+}

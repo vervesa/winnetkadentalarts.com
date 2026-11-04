@@ -32,6 +32,7 @@ async function* walk(dir) {
 
 await rm(OUT, { recursive: true, force: true });
 await cp(SRC, OUT, { recursive: true });
+await rm(path.join(OUT, "assets/img/src"), { recursive: true, force: true }); // originals for tools/images.mjs, never served
 
 const totals = { html: [0, 0], css: [0, 0], js: [0, 0] };
 for await (const file of walk(OUT)) {
