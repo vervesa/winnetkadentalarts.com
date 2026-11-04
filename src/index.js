@@ -5,7 +5,10 @@
  * - handles the appointment-request form (POST /api/appointment-request) by
  *   e-mailing the office through Cloudflare Email Routing, once the
  *   APPOINTMENT_EMAIL binding in wrangler.jsonc is enabled
+ * - serves the practice's live Google reviews (GET /api/reviews, see reviews.js)
  */
+
+import { handleReviews } from "./reviews.js";
 
 const WWW_HOST = "www.winnetkadentalarts.com";
 const APEX_HOST = "winnetkadentalarts.com";
@@ -14,12 +17,16 @@ const PHONE = "(847) 441-6510";
 const PHONE_LINK = `<a href="tel:+1-847-441-6510">${PHONE}</a>`;
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     if (url.hostname === APEX_HOST) {
       url.hostname = WWW_HOST;
       return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === "/api/reviews") {
+      return handleReviews(request, env, ctx);
     }
 
     if (url.pathname === FORM_PATH) {

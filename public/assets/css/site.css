@@ -615,3 +615,46 @@ figure { margin: 0; }
 .slider-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 @media (prefers-reduced-motion: reduce) { .slider-track { scroll-behavior: auto; } }
 @media (max-width: 640px) { .slider-count { display: none; } .service-card { min-height: 300px; padding: 24px 22px 20px; } }
+
+/* ---------- Live Google reviews (assets/js/reviews.js fills the existing quote slots) ----------
+   The script replaces the static quote in .hero-quote, the sidebar .aside-quote
+   blockquotes and the ul.reviews list with live reviews, keeping the markup and
+   type already there. These rules add only the marker line and a length guard. */
+.gq-avatar { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; vertical-align: middle; flex: none; }
+.review-meta .name { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+/* Quote footers become a row: avatar, name, then the marker line. */
+.hero-quote footer, .aside-quote footer { display: flex; flex-wrap: wrap; align-items: center; gap: 0.45rem 0.9rem; }
+.hero-quote footer .gq-name, .aside-quote footer .gq-name { color: inherit; text-decoration: none; }
+.hero-quote footer .gq-name:hover, .aside-quote footer .gq-name:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+.reviews .gq-name { color: inherit; text-decoration: none; }
+
+/* The marker: "Newest brief five-star review on Google Maps · View review". */
+.gq-meta { font-family: var(--sans); font-size: 0.72rem; letter-spacing: 0.03em; text-transform: none; color: var(--mute); }
+.gq-meta a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+.gq-meta a:hover { color: var(--blue); }
+.hero-quote .gq-meta { color: var(--ivory-70); }
+.hero-quote .gq-meta a:hover { color: var(--accent); }
+.reviews .gq-meta-row { margin-top: 0.55rem; }
+
+/* Google's text attribution, styled as its guidelines ask: Roboto if present (else the
+   site's sans), weight 400, 12–16px, never uppercased or wrapped; white on navy. */
+.GMP-attribution {
+  font-family: Roboto, var(--sans); font-style: normal; font-weight: 400;
+  font-size: 0.8rem; letter-spacing: normal; text-transform: none; white-space: nowrap; color: #5e5e5e;
+}
+.hero-quote .GMP-attribution, .on-dark .GMP-attribution { color: #fff; }
+
+/* Ordering/filter notice above the reviews-page list (required by Google). */
+.gq-notice { font-family: var(--sans); font-size: 0.8125rem; color: var(--mute); margin: 0 0 1.2rem; }
+.gq-notice:empty { display: none; }
+
+/* Length guard: a quote stops at --review-lines with an ellipsis and the "View review"
+   link carries the rest. The Worker's MAX_CHARS and each slot's data-reviews-max-chars
+   do the real limiting; this only catches narrow screens. */
+.hero-quote { --review-lines: 5; }
+.aside-quote blockquote, blockquote.aside-quote { --review-lines: 6; }
+.hero-quote > p, .aside-quote blockquote > p, blockquote.aside-quote > p {
+  display: -webkit-box; -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--review-lines); overflow: hidden;
+}
