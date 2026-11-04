@@ -180,13 +180,14 @@
     <div><label for="home-request-email">Email Address*</label><input id="home-request-email" name="email" type="email" autocomplete="email" required></div>
     <div><label for="home-request-status">New / Existing Patient*</label>
       <select id="home-request-status" name="patient_status" required>
-        <option value="">New / Existing Patient</option>
+        <option value="" disabled selected>Select one</option>
         <option>New Patient</option>
         <option>Existing Patient</option>
       </select></div>
   </div>
   <div><label for="home-request-message">Message (Optional)</label><textarea id="home-request-message" name="message"></textarea></div>
   <div class="hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+  <div class="turnstile" data-turnstile></div>
   <div class="actions"><button class="btn btn-primary" type="submit">Submit</button></div>
 </form>
       <div class="prose">

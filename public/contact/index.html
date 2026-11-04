@@ -79,13 +79,14 @@
     <div><label for="request-email">Email Address*</label><input id="request-email" name="email" type="email" autocomplete="email" required></div>
     <div><label for="request-status">New / Existing Patient*</label>
       <select id="request-status" name="patient_status" required>
-        <option value="">New / Existing Patient</option>
+        <option value="" disabled selected>Select one</option>
         <option>New Patient</option>
         <option>Existing Patient</option>
       </select></div>
   </div>
   <div><label for="request-message">Message (Optional)</label><textarea id="request-message" name="message"></textarea></div>
   <div class="hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+  <div class="turnstile" data-turnstile></div>
   <div class="actions"><button class="btn btn-primary" type="submit">Submit</button></div>
 </form>
     </div>

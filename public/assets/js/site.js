@@ -132,6 +132,45 @@
     start();
   });
 
+  /* 4. Appointment request forms: one submission per click, and the Cloudflare Turnstile check.
+        TURNSTILE_SITE_KEY comes from the Cloudflare dashboard (Turnstile -> the widget for
+        winnetkadentalarts.com). Until it is set, the forms work without the check. The matching
+        secret key lives on the Worker as the TURNSTILE_SECRET secret. */
+  var TURNSTILE_SITE_KEY = "";
+  var forms = document.querySelectorAll('form[action="/api/appointment-request"]');
+  Array.prototype.forEach.call(forms, function (form) {
+    var button = form.querySelector('button[type="submit"]');
+    form.addEventListener("submit", function (event) {
+      if (form.getAttribute("data-submitting")) { event.preventDefault(); return; }
+      form.setAttribute("data-submitting", "1");
+      if (button) { button.disabled = true; button.textContent = "Sending\u2026"; }
+    });
+    // Back button to a page restored from the cache: let them submit again.
+    window.addEventListener("pageshow", function (event) {
+      if (!event.persisted) return;
+      form.removeAttribute("data-submitting");
+      if (button) { button.disabled = false; button.textContent = "Submit"; }
+    });
+  });
+  if (TURNSTILE_SITE_KEY && forms.length) {
+    window.__wdaTurnstile = function () {
+      Array.prototype.forEach.call(forms, function (form) {
+        var slot = form.querySelector("[data-turnstile]");
+        if (!slot || !window.turnstile) return;
+        window.turnstile.render(slot, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: form.closest(".on-dark") ? "dark" : "light",
+          "error-callback": function () { slot.setAttribute("data-turnstile-error", ""); }
+        });
+      });
+    };
+    var ts = document.createElement("script");
+    ts.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__wdaTurnstile&render=explicit";
+    ts.async = true;
+    ts.defer = true;
+    document.head.appendChild(ts);
+  }
+
   var videos = document.querySelectorAll(".video[data-video]");
   Array.prototype.forEach.call(videos, function (box) {
     var btn = box.querySelector("button");

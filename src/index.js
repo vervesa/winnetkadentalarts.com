@@ -33,14 +33,14 @@ export default {
       if (request.method !== "POST") {
         return new Response("Method not allowed", { status: 405, headers: { Allow: "POST" } });
       }
-      return handleAppointmentRequest(request, env);
+      return handleAppointmentRequest(request, env, ctx);
     }
 
     return env.ASSETS.fetch(request);
   },
 };
 
-async function handleAppointmentRequest(request, env) {
+async function handleAppointmentRequest(request, env, ctx) {
   let form;
   try {
     form = await request.formData();
@@ -55,13 +55,31 @@ async function handleAppointmentRequest(request, env) {
   const email = field("email", 200);
   const status = field("patient_status", 40);
   const message = field("message", 4000);
+  const turnstileToken = field("cf-turnstile-response", 4096);
+  const thankYou = new URL("/thank-you/", request.url).toString();
+  const ip = request.headers.get("cf-connecting-ip") || "unknown";
 
   // Bots fill the hidden field; pretend it worked and drop it.
-  if (honeypot) return Response.redirect(new URL("/thank-you/", request.url).toString(), 303);
+  if (honeypot) return Response.redirect(thankYou, 303);
 
   if (!name || !phone || !email || !status) {
     return page("A required field is missing.", "Please go back and fill in your name, phone number, e-mail address and whether you are a new or existing patient.", 400);
   }
+
+  // Cloudflare Turnstile: enforced once the TURNSTILE_SECRET secret is set on the Worker
+  // (the widget appears on the forms once the site key is set in assets/js/site.js).
+  if (env.TURNSTILE_SECRET) {
+    const human = await verifyTurnstile(env.TURNSTILE_SECRET, turnstileToken, ip);
+    if (!human) {
+      return page("Please confirm you're not a robot.", `Go back, complete the check at the bottom of the form and send it again, or call or text the office at ${PHONE_LINK}.`, 400);
+    }
+  }
+
+  // The same request sent twice within two minutes (a double-click on Submit, a refresh of
+  // the result page) is answered as a success without a second e-mail.
+  const cache = caches.default;
+  const dedupeKey = new Request(new URL("/__dedupe/" + (await fingerprint([name, phone, email, status, message])), request.url).toString());
+  if (await cache.match(dedupeKey)) return Response.redirect(thankYou, 303);
 
   if (!env.APPOINTMENT_EMAIL) {
     // Binding not enabled yet (see wrangler.jsonc). Say so rather than lose the request.
@@ -69,7 +87,6 @@ async function handleAppointmentRequest(request, env) {
   }
 
   const submitted = new Date();
-  const ip = request.headers.get("cf-connecting-ip") || "unknown";
   const body = [
     `Appointment request from the website`,
     ``,
@@ -106,7 +123,30 @@ async function handleAppointmentRequest(request, env) {
     return page("We couldn't send your request.", `Please call or text the office at ${PHONE_LINK} to request an appointment.`, 502);
   }
 
-  return Response.redirect(new URL("/thank-you/", request.url).toString(), 303);
+  ctx.waitUntil(cache.put(dedupeKey, new Response("sent", { headers: { "Cache-Control": "public, max-age=120" } })));
+  return Response.redirect(thankYou, 303);
+}
+
+async function verifyTurnstile(secret, token, ip) {
+  if (!token) return false;
+  try {
+    const body = new FormData();
+    body.append("secret", secret);
+    body.append("response", token);
+    if (ip && ip !== "unknown") body.append("remoteip", ip);
+    const res = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", { method: "POST", body });
+    const data = await res.json();
+    return data.success === true;
+  } catch (err) {
+    console.error("turnstile verify failed", err);
+    return false;
+  }
+}
+
+async function fingerprint(parts) {
+  const data = new TextEncoder().encode(parts.map((v) => String(v).toLowerCase().replace(/\s+/g, " ").trim()).join("\u001f"));
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  return Array.from(new Uint8Array(hash), (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
 function page(title, text, status) {

@@ -663,3 +663,7 @@ figure { margin: 0; }
   display: -webkit-box; -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--review-lines); overflow: hidden;
 }
+
+/* Turnstile slot in the appointment forms: no height until the widget renders. */
+.turnstile:empty { display: none; }
+.turnstile { margin: 0.25rem 0 1rem; }
