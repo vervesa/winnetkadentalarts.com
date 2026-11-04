@@ -36,15 +36,17 @@ Optional, no slot yet: a welcome shot of the front desk for New Patients; a seco
 
 ## Hero: candidates and how to search
 
-Starting points on Adobe Stock (open with `https://stock.adobe.com/images/x/<id>`):
+Brief from Dr. Warga and Luke: a young woman of European descent, smiling **with teeth showing** — good-looking, even teeth (no gaps, nothing crooked) — close crop like naplesdentalarts.com, elegant and understated. Reviewed at full preview size on Adobe Stock (open with `https://stock.adobe.com/images/x/<id>`):
 
-- **65825676** — young brunette, chin resting on her hands, grey knit, bright room. Closest to the Naples reference pose and mood.
-- 267749068 — brunette, hand at her chin, broad smile, grey backdrop. More polished/"smile ad"; teeth-forward.
-- 423290315 — young blonde, white turtleneck, hand on cheek, friendly; studio-blue backdrop would need the arch crop to hide most of it.
-- 487530799 — young, cream knit, hands under chin, dark background.
-- Mature alternates if the hero ever rotates: 159275151 (silver-blonde, hand on cheek, pink cardigan, outdoors), 50841916 (long silver hair, grey wrap, hands under chin), 159275463 (white cardigan, soft smile, interior).
+1. **2227293782** — close-up, hand on chin, broad genuine smile, straight white teeth, dark hair, soft blue top, warm interior. The closest match to the Naples pose. Same shoot, wider framing on a couch: 2229954733.
+2. **2033093740** — long brown hair, window light, warm smile, charcoal background. The most "quiet luxury" of the set and the background sits perfectly next to the site's navy.
+3. **1525726933** — blonde, blue eyes, soft natural smile with teeth, beige backdrop. Classic beauty portrait, a touch more polished.
+4. **693854959** — blonde bob, sage shirt, chin on fist, bright smile, beige backdrop. Landscape file (she sits left of centre, so it crops to the 4:5 arch cleanly); crop out the small wrist tattoo.
+5. 65825676 — chin resting on both hands, grey knit, bright kitchen. Fine, but an older, more-used asset.
 
-Searching for better ones: Adobe's "relevance" sort surfaces much-used studio stock. Use short queries (3–5 words) — `woman smiling chin on hand`, `young woman natural smile knitwear`, `elegant woman laughing close up`, `woman smiling cashmere portrait` — with Photos only, Generative AI excluded, Orientation vertical; then open the best hit and use **Find similar**; the **Undiscovered content** filter and the **Premium** collection give the less-used, editorial look that fits the brief. Avoid: bare shoulders, heavy makeup, coloured studio backdrops, city backgrounds that place the photo elsewhere, hats and winter-wonderland props.
+Rejected after a close look, so nobody re-checks them: 2215416615 (passport-style skincare shot), 591119724 (uneven teeth, flat lighting), 1255364735 (red lips, looking away — fashion, not a patient), 267749068 / 423290315 (ad-like or coloured studio backdrops).
+
+Searching for more: Adobe's relevance sort surfaces 15-year-old studio stock first. Search short — `woman toothy smile close up portrait`, `beautiful smile woman portrait white teeth natural`, `woman smiling chin on hand close up teeth` — with Photos only and Generative AI excluded, then sort newest first (IDs above ~1,000,000,000 are the modern, editorial-looking assets) and use **Find similar** on the best hit. Avoid bare shoulders, heavy makeup, coloured backdrops, city backgrounds, hats and props.
 
 ## What happens after handoff
 
