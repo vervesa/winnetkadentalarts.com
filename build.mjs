@@ -5,6 +5,7 @@ import { cp, readdir, readFile, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { minify as minifyHtml } from "html-minifier-terser";
 import { transform } from "esbuild";
+import { injectSchema } from "./scripts/schema.mjs";
 
 const SRC = "public";
 const OUT = "dist";
@@ -14,8 +15,7 @@ const HTML_OPTIONS = {
   conservativeCollapse: false,
   removeComments: true,
   minifyCSS: true, // style="" attributes and <style> blocks
-  minifyJS: true, // inline <script> blocks
-  processScripts: ["application/ld+json"],
+  minifyJS: true, // inline <script> blocks (JSON-LD is not executable, so it is left as scripts/schema.mjs wrote it)
   useShortDoctype: true,
   removeAttributeQuotes: false, // keep quotes: safest for attribute values with spaces/URLs
   keepClosingSlash: false,
@@ -40,7 +40,9 @@ for await (const file of walk(OUT)) {
   const source = await readFile(file, "utf8");
   let output;
   if (ext === ".html") {
-    output = await minifyHtml(source, HTML_OPTIONS);
+    // JSON-LD (Organization, Dentist, WebSite, WebPage, BreadcrumbList, Person, FAQPage) is
+    // generated from the page here rather than kept by hand in public/ — see scripts/schema.mjs.
+    output = await minifyHtml(injectSchema(source, path.relative(OUT, file)), HTML_OPTIONS);
   } else {
     const result = await transform(source, {
       loader: ext === ".css" ? "css" : "js",

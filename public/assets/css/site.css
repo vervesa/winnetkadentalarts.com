@@ -110,6 +110,37 @@ sup { font-size: 0.6em; line-height: 0; }
 .lede { font-family: var(--serif); font-size: 1.45rem; line-height: 1.4; color: var(--ink); }
 .visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
+/* Questions and answers (<section class="faq"> of <details>; the build turns them into FAQPage schema) */
+.faq { margin-top: 2.4em; }
+.faq h2 { margin-bottom: 0.6em; }
+.faq details { border-top: 1px solid var(--line); }
+.faq details:last-of-type { border-bottom: 1px solid var(--line); }
+.faq summary {
+  position: relative;
+  padding: 0.9em 2.2em 0.9em 0;
+  font-family: var(--sans);
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  list-style: none;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 0.2em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  line-height: 1;
+  font-weight: 300;
+  color: var(--blue);
+}
+.faq details[open] summary::after { content: "−"; }
+.faq summary:hover { color: var(--blue); }
+.faq details > :not(summary) { margin: 0 0 1.1em; }
+.faq details > p:first-of-type { margin-top: 0.1em; }
+
 /* Small-caps kicker above headings */
 .kicker {
   font-family: var(--sans);
