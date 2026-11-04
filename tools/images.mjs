@@ -11,6 +11,12 @@
 // JPEG is also written as <name>.jpg for the plain <img src> fallback and og:image.
 //
 // Originals are never served: public/assets/img/src/ is excluded from the build.
+//
+// Served images are cached for a year as immutable (public/_headers), so a slot whose picture
+// CHANGES (a retouched original, a different photo, a new crop) must get new file names or
+// browsers and the edge keep showing the old one. Set "version": 2 (3, …) on the entry: the files
+// become <name>-v2-<width>.*, and the printed markup changes with them — paste it into the page
+// and delete the old files.
 
 import { mkdir, readFile, stat } from "node:fs/promises";
 import path from "node:path";
@@ -28,7 +34,8 @@ if (!entries.length) throw new Error(`no entries match ${only.join(", ")}`);
 
 await mkdir(OUT_DIR, { recursive: true });
 
-for (const [name, spec] of entries) {
+for (const [slot, spec] of entries) {
+  const name = spec.version ? `${slot}-v${spec.version}` : slot; // output file stem
   const srcPath = path.join(SRC_DIR, spec.src);
   await stat(srcPath); // throws a clear ENOENT if the original is missing
   await mkdir(path.dirname(path.join(OUT_DIR, name)), { recursive: true }); // e.g. services/
@@ -66,7 +73,7 @@ for (const [name, spec] of entries) {
   const fallbackH = Math.round((largest * ch) / cw);
 
   const srcset = (ext) => widths.map((w) => `/assets/img/${name}-${w}.${ext} ${w}w`).join(", ");
-  console.log(`\n${name}: ${meta.width}×${meta.height} → ${widths.join("/")}px (${spec.ratio || "original ratio"}), fallback ${largest}×${fallbackH} ${(fallback.size / 1024).toFixed(0)} KB`);
+  console.log(`\n${slot}${spec.version ? ` (v${spec.version})` : ""}: ${meta.width}×${meta.height} → ${widths.join("/")}px (${spec.ratio || "original ratio"}), fallback ${largest}×${fallbackH} ${(fallback.size / 1024).toFixed(0)} KB`);
   console.log(
     `<picture>` +
       `<source type="image/avif" srcset="${srcset("avif")}" sizes="${spec.sizes}">` +
