@@ -1,0 +1,41 @@
+# winnetkadentalarts.com — product backlog
+
+Working list for the site. Newest decisions at the top of each item; done items move to the bottom.
+
+## Why the site exists, commercially
+
+Luke is compensated for **new patients who convert into restorative treatment and who came from the website or online search**. Everything on this list is in service of that: every change should either bring more of those people to the site, make it easier for them to contact the office, or make it possible to prove which patients came from the web.
+
+## Conversion tracking (not started) — the key item
+
+Goal: attribute each new patient to the website / online search, and follow them through to restorative treatment, so the compensation can be measured.
+
+What to capture on the site
+- **Click-to-call and click-to-text**: every `tel:` tap (topbar, hero, sidebar cards, contact band, footer). Fire an event with the page and the link's location.
+- **Appointment request form**: submissions (home page form and contact page form), with the page they came from.
+- **Source**: landing page, referrer and UTM parameters (Google Business Profile links should carry `utm_source=google&utm_medium=organic&utm_campaign=gbp`, ads their own), kept for the session and written into the form submission so the office email shows where the lead came from.
+- Consider a **tracking phone number** for the website only (call-tracking service such as CallRail or a Google forwarding number) so phone leads from the site are countable even when nobody taps a link. Decide whether the text-enabled main number can be swapped; the number appears in JSON-LD and on the Google listing, so a tracking number needs a dynamic-number-insertion approach rather than a hard replacement.
+
+How to join it to patients
+- Add a "how did you hear about us" field to the web intake forms (the HIPAA-compliant link-based forms) with "Website / Google search" as an option, and make the office record the referral source in OpenDental's patient record (Luke already has an OpenDental automation stack; a scheduled job can match web leads — name, phone, email, submission time — to new patients and then to completed restorative procedure codes).
+- Define "restorative treatment" as a list of procedure codes so the report is unambiguous.
+- Monthly report: web leads → new patients → restorative treatment started/completed, by source.
+
+Tooling choice (open): GA4 + Google Tag Manager is the standard; a lighter option is Cloudflare Web Analytics (no cookies, but no event-level funnel) plus server-side logging of form submissions in the Worker. Whatever is chosen, update the Privacy Policy's "Cookies and analytics" section, which currently says the site uses no analytics or advertising cookies.
+
+## Open items
+
+1. **Appointment form email**: not connected. Cloudflare Email Routing must be enabled on the winnetkadentalarts.com zone (no MX records exist today, so nothing to conflict with) and info@wargadds.com added and verified as a destination; then uncomment the `send_email` binding in `wrangler.jsonc` and push. Until then the form answers "Online requests aren't connected yet, please call or text".
+2. **Privacy Policy and Terms of Service**: the Privacy Policy now has short factual text (Nov 3) and links the Notice of Privacy Practices; replace with the practice's own policy if there is one. Terms of Service is still a placeholder.
+3. **Stock-photo image pass**: the artifact preview's service-page photos and plates are not in the repo; decide whether to pull them in.
+4. **Team photo** of Dr. Warga and Jeanne for the home page slot (currently the molar line drawing).
+5. **Reception photo**: a wider original showing the stained-glass window would let the arch crop show it; the repo copy is 900×600.
+6. **Online bill pay**: restore the nav link and the Payments-page section once a portal is live.
+7. **Patient portal**: hosted separately; link from the site when it exists.
+8. **Redirects** for old `/wp-content/uploads/...` PDF paths if anything printed points at them.
+9. **Google reviews**: tune `MIN_CHARS`/`MAX_CHARS` and per-slot caps as new reviews arrive; decide whether to drop the old "powered by Google" PNG on the reviews page.
+10. **Notice of Privacy Practices** lives only on the Privacy Policy page (Luke's call, Nov 3).
+
+## Done
+
+- Nov 3: site live on Cloudflare Workers with custom domains; Gallery design; Return to Health removed; Bill Pay removed; live Google reviews in the existing quote slots, different review per page; Insurance page rewritten for fee-for-service (no network claims); "call or text" everywhere; reception crop; services slider autoplay with edge fade; cancellation policy without a dollar amount; all COVID mentions removed; paperless new-patient forms (English and Spanish) with the PDF forms removed; Privacy Policy written.
