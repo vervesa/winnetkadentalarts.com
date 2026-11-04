@@ -45,7 +45,7 @@ async function handleAppointmentRequest(request, env) {
   try {
     form = await request.formData();
   } catch {
-    return page("We couldn't read that form.", "Please go back and try again, or call the office.", 400);
+    return page("We couldn't read that form.", "Please go back and try again, or call or text the office.", 400);
   }
 
   const field = (name, max = 500) => String(form.get(name) || "").trim().slice(0, max);
@@ -65,7 +65,7 @@ async function handleAppointmentRequest(request, env) {
 
   if (!env.APPOINTMENT_EMAIL) {
     // Binding not enabled yet (see wrangler.jsonc). Say so rather than lose the request.
-    return page("Online requests aren't connected yet.", `Please call the office at ${PHONE_LINK} to request an appointment.`, 503);
+    return page("Online requests aren't connected yet.", `Please call or text the office at ${PHONE_LINK} to request an appointment.`, 503);
   }
 
   const submitted = new Date();
@@ -103,7 +103,7 @@ async function handleAppointmentRequest(request, env) {
     await env.APPOINTMENT_EMAIL.send(new EmailMessage(env.NOTIFY_FROM, env.NOTIFY_TO, raw));
   } catch (err) {
     console.error("appointment e-mail failed", err);
-    return page("We couldn't send your request.", `Please call the office at ${PHONE_LINK} to request an appointment.`, 502);
+    return page("We couldn't send your request.", `Please call or text the office at ${PHONE_LINK} to request an appointment.`, 502);
   }
 
   return Response.redirect(new URL("/thank-you/", request.url).toString(), 303);
