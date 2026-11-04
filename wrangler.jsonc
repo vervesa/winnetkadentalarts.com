@@ -17,6 +17,8 @@
     { "pattern": "winnetkadentalarts.com", "custom_domain": true }
   ],
   "observability": { "enabled": true },
+  // Keep variables and secrets set in the dashboard (e.g. PlacesAPI) when Workers Builds deploys.
+  "keep_vars": true,
   "workers_dev": true,
 
   "vars": {
