@@ -248,7 +248,7 @@
     ],
     "sizes": "(max-width: 640px) 50vw, 380px",
     "alt": "A treatment room at Winnetka Dental Arts",
-    "version": 2
+    "version": 3
   },
   "office-vestibule": {
     "src": "office-vestibule.jpg",
