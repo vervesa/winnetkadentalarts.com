@@ -25,7 +25,7 @@ Tooling choice (open): GA4 + Google Tag Manager is the standard; a lighter optio
 
 ## Open items
 
-1. **Appointment form email**: not connected. Cloudflare Email Routing must be enabled on the winnetkadentalarts.com zone (no MX records exist today, so nothing to conflict with) and info@wargadds.com added and verified as a destination; then uncomment the `send_email` binding in `wrangler.jsonc` and push. Until then the form answers "Online requests aren't connected yet, please call or text".
+1. **Appointment form**: connected (delivers to office@wargadds.com) and protected by Cloudflare Turnstile (Managed mode). Remaining: nothing, unless the office wants a copy sent to a second address (`NOTIFY_TO` in `wrangler.jsonc` takes one verified address).
 2. **Privacy Policy and Terms of Service**: the Privacy Policy now has short factual text (Nov 3) and links the Notice of Privacy Practices; replace with the practice's own policy if there is one. Terms of Service is still a placeholder.
 3. **Stock-photo image pass**: the artifact preview's service-page photos and plates are not in the repo; decide whether to pull them in.
 4. **Team photo** of Dr. Warga and Jeanne for the home page slot (currently the molar line drawing).
@@ -38,4 +38,5 @@ Tooling choice (open): GA4 + Google Tag Manager is the standard; a lighter optio
 
 ## Done
 
+- Nov 3 (late): appointment form e-mails the office; one e-mail per submission; "Select one" placeholder; Turnstile live; services carousel loops continuously; hours 6–4 / 6–2; no "emergencies" wording; "Book Appointment" lands with the form heading in view.
 - Nov 3: site live on Cloudflare Workers with custom domains; Gallery design; Return to Health removed; Bill Pay removed; live Google reviews in the existing quote slots, different review per page; Insurance page rewritten for fee-for-service (no network claims); "call or text" everywhere; reception crop; services slider autoplay with edge fade; cancellation policy without a dollar amount; all COVID mentions removed; paperless new-patient forms (English and Spanish) with the PDF forms removed; Privacy Policy written.
