@@ -32,7 +32,10 @@ export async function handleReviews(request, env, ctx) {
   if (cached) return cached;
 
   const apiKey = env.PlacesAPI || env.GOOGLE_PLACES_KEY;
-  if (!apiKey) return json({ error: "reviews not configured" }, 503);
+  if (!apiKey) {
+    // Temporary diagnostic: which bindings does this version see? (names only)
+    return json({ error: "reviews not configured", bindings: Object.keys(env).sort() }, 503);
+  }
 
   let place;
   try {
