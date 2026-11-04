@@ -32,10 +32,7 @@ export async function handleReviews(request, env, ctx) {
   if (cached) return cached;
 
   const apiKey = env.PlacesAPI || env.GOOGLE_PLACES_KEY;
-  if (!apiKey) {
-    // Temporary diagnostic: which bindings does this version see? (names only)
-    return json({ error: "reviews not configured", bindings: Object.keys(env).sort() }, 503);
-  }
+  if (!apiKey) return json({ error: "reviews not configured" }, 503);
 
   let place;
   try {
@@ -70,7 +67,8 @@ export async function handleReviews(request, env, ctx) {
 
 // Keep only what the pages render, with flat names.
 function shape(r) {
-  const text = (r.text && r.text.text ? r.text.text : "").trim();
+  // Verbatim text, with runs of whitespace collapsed (reviews sometimes carry double spaces or stray newlines).
+  const text = (r.text && r.text.text ? r.text.text : "").replace(/\s+/g, " ").trim();
   const translated = Boolean(r.originalText && r.text && r.originalText.languageCode !== r.text.languageCode);
   const a = r.authorAttribution;
   return {

@@ -653,7 +653,7 @@ figure { margin: 0; }
    link carries the rest. The Worker's MAX_CHARS and each slot's data-reviews-max-chars
    do the real limiting; this only catches narrow screens. */
 .hero-quote { --review-lines: 5; }
-.aside-quote blockquote, blockquote.aside-quote { --review-lines: 6; }
+.aside-quote blockquote, blockquote.aside-quote { --review-lines: 8; }
 .hero-quote > p, .aside-quote blockquote > p, blockquote.aside-quote > p {
   display: -webkit-box; -webkit-box-orient: vertical;
   -webkit-line-clamp: var(--review-lines); overflow: hidden;
