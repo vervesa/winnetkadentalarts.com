@@ -26,6 +26,52 @@
   src: url("../fonts/jost-var.woff2") format("woff2");
 }
 
+/* Fallback faces with the web fonts' metrics (size-adjust + ascent/descent overrides), so the
+   text set in a system font before the web font arrives takes up the same space and the swap
+   moves nothing (the swap used to shift the hero on PageSpeed). One per platform family:
+   Arial/Georgia on Windows and macOS, Roboto/Noto Serif on Android, Times New Roman or the
+   metric-compatible Liberation fonts elsewhere. */
+@font-face {
+  font-family: "Jost Fallback Arial";
+  src: local("Arial"), local("ArialMT"), local("Liberation Sans");
+  size-adjust: 96.01%;
+  ascent-override: 111.45%;
+  descent-override: 39.06%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Jost Fallback Roboto";
+  src: local("Roboto");
+  size-adjust: 96.22%;
+  ascent-override: 111.21%;
+  descent-override: 38.97%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Cormorant Garamond Fallback Georgia";
+  src: local("Georgia");
+  size-adjust: 88.38%;
+  ascent-override: 104.55%;
+  descent-override: 32.47%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Cormorant Garamond Fallback Times New Roman";
+  src: local("Times New Roman"), local("TimesNewRomanPSMT"), local("Liberation Serif");
+  size-adjust: 96.98%;
+  ascent-override: 95.27%;
+  descent-override: 29.59%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "Cormorant Garamond Fallback Noto Serif";
+  src: local("Noto Serif");
+  size-adjust: 81.91%;
+  ascent-override: 112.80%;
+  descent-override: 35.04%;
+  line-gap-override: 0%;
+}
+
 :root {
   --paper: #f4f1ea;      /* page ground (warm ivory) */
   --paper-2: #faf8f3;    /* lighter panel */
@@ -45,8 +91,8 @@
   --blue-2: #1f4486;
   --accent: #8fb0e8;     /* kickers / numerals on navy */
 
-  --serif: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
-  --sans: "Jost", "Avenir Next", "Futura", "Helvetica Neue", Arial, sans-serif;
+  --serif: "Cormorant Garamond", "Cormorant Garamond Fallback Georgia", "Cormorant Garamond Fallback Times New Roman", "Cormorant Garamond Fallback Noto Serif", Georgia, serif;
+  --sans: "Jost", "Jost Fallback Arial", "Jost Fallback Roboto", Arial, sans-serif;
 
   --wrap: 1200px;
   --gutter: clamp(16px, 4vw, 40px);
@@ -283,7 +329,18 @@ sup { font-size: 0.6em; line-height: 0; }
   background: radial-gradient(900px 620px at 80% 10%, rgba(143, 176, 232, 0.16), rgba(143, 176, 232, 0) 62%), var(--navy);
   color: var(--ivory);
 }
-.hero-mark { position: absolute; left: -70px; bottom: -90px; width: 560px; opacity: 0.06; pointer-events: none; }
+/* The practice mark as a faint watermark: decoration, so it is a background rather than an <img> */
+.hero::before {
+  content: "";
+  position: absolute;
+  left: -70px;
+  bottom: -90px;
+  width: 560px;
+  aspect-ratio: 220 / 249;
+  background: url("/assets/img/mark-light.png") center / contain no-repeat;
+  opacity: 0.06;
+  pointer-events: none;
+}
 .hero-grid {
   position: relative;
   display: grid;
