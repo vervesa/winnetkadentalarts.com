@@ -51,8 +51,15 @@
     }
   });
 
-  /* 3. Services slider: arrows, progress line and counter on top of a native scroll-snap track */
+  /* 3. Services carousel. The track is a native horizontal scroller (swipes and arrow keys work
+        without JS). site.js turns it into a slow, continuous loop: the seven cards are cloned once,
+        the track creeps along at CAROUSEL_SPEED px/s, and every time it has moved one full set it
+        is rewound by that same distance, which looks identical, so the loop never visibly restarts.
+        It pauses while hovered, focused or touched and for a few seconds after a wheel or trackpad
+        scroll, stands still while the tab is hidden or the carousel is off screen, and for visitors
+        who prefer reduced motion it stays a plain snapping slider with arrows. */
   var reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var CAROUSEL_SPEED = 28; // pixels per second: one card every ~11 s, all seven in about 80 s
   Array.prototype.forEach.call(document.querySelectorAll("[data-slider]"), function (slider) {
     var track = slider.querySelector(".slider-track");
     var prev = slider.querySelector('[data-dir="-1"]');
@@ -60,33 +67,69 @@
     var thumb = slider.querySelector(".slider-thumb");
     var count = slider.querySelector(".slider-count .cur");
     if (!track || !prev || !next) return;
-    var slides = track.children;
-    var total = slides.length;
+    var total = track.children.length;
+    var loop = !reducedMotion && total > 1;
+
+    if (loop) {
+      // One extra copy of every card, hidden from assistive tech and the tab order.
+      for (var i = 0; i < total; i++) {
+        var clone = track.children[i].cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        Array.prototype.forEach.call(clone.querySelectorAll("a, button"), function (el) { el.setAttribute("tabindex", "-1"); });
+        track.appendChild(clone);
+      }
+      slider.classList.add("is-looping");
+    }
 
     function gap() { return parseFloat(getComputedStyle(track).columnGap) || 0; }
     function step() {
-      var first = slides[0];
-      if (!first) return track.clientWidth;
-      return first.getBoundingClientRect().width + gap();
+      var first = track.children[0];
+      return first ? first.getBoundingClientRect().width + gap() : track.clientWidth;
     }
+    function loopWidth() { return step() * total; }
     // the last visible slide needs no trailing gap, so count the gap once more than the slides
     function perView() { return Math.max(1, Math.floor((track.clientWidth + gap() + 1) / step())); }
+
     function update() {
-      var max = track.scrollWidth - track.clientWidth;
       var x = track.scrollLeft;
-      var first = Math.min(total, Math.ceil(x / step() - 0.02) + 1);
-      var last = Math.min(total, first + perView() - 1);
-      if (count) count.textContent = first === last ? String(first) : first + "–" + last;
-      if (thumb) {
-        var w = Math.max(track.clientWidth / track.scrollWidth, 0.1);
-        thumb.style.width = (w * 100) + "%";
-        thumb.style.left = (max > 0 ? (x / max) * (1 - w) * 100 : 0) + "%";
+      var s = step();
+      var view = perView();
+      if (loop) {
+        var pos = ((x % loopWidth()) + loopWidth()) % loopWidth();
+        var first = Math.floor(pos / s + 0.02) % total;
+        if (count) count.textContent = String(first + 1); // the leading card; the loop has no fixed "last"
+        if (thumb) {
+          var w = Math.min(1, view / total);
+          thumb.style.width = (w * 100) + "%";
+          thumb.style.left = ((pos / loopWidth()) * (1 - w) * 100) + "%";
+        }
+      } else {
+        var max = track.scrollWidth - track.clientWidth;
+        var f = Math.min(total, Math.ceil(x / s - 0.02) + 1);
+        var l = Math.min(total, f + view - 1);
+        if (count) count.textContent = f === l ? String(f) : f + "–" + l;
+        if (thumb) {
+          var tw = Math.max(track.clientWidth / track.scrollWidth, 0.1);
+          thumb.style.width = (tw * 100) + "%";
+          thumb.style.left = (max > 0 ? (x / max) * (1 - tw) * 100 : 0) + "%";
+        }
+        prev.disabled = x <= 2;
+        next.disabled = x >= max - 2;
       }
-      prev.disabled = x <= 2;
-      next.disabled = x >= max - 2;
     }
+
+    // Arrows: one screenful at a time. In the loop the track is first rewound or advanced by a
+    // whole set when needed, which is invisible, so there is always room to move either way.
+    var holdUntil = 0;
     function go(dir) {
-      track.scrollBy({ left: dir * step() * perView(), behavior: reducedMotion ? "auto" : "smooth" });
+      var page = step() * perView();
+      if (loop) {
+        var lw = loopWidth();
+        if (dir < 0 && track.scrollLeft < page) track.scrollLeft += lw;
+        if (dir > 0 && track.scrollLeft + page > track.scrollWidth - track.clientWidth) track.scrollLeft -= lw;
+        holdUntil = performance.now() + 2500;
+      }
+      track.scrollBy({ left: dir * page, behavior: reducedMotion ? "auto" : "smooth" });
     }
     prev.addEventListener("click", function () { go(-1); });
     next.addEventListener("click", function () { go(1); });
@@ -94,42 +137,46 @@
     window.addEventListener("resize", update);
     update();
 
-    /* Autoplay: one card every few seconds, back to the start after the last. It waits while the
-       slider is hovered, focused or touched, restarts its countdown after the visitor scrolls or
-       uses an arrow, and stays still while the tab is hidden, while the slider is off screen, and
-       for visitors who prefer reduced motion. */
-    var AUTOPLAY_MS = 4000;
-    var timer = null, held = false, onScreen = true, programmatic = false;
-    function advance() {
-      if (held || !onScreen || document.hidden) return;
-      var max = track.scrollWidth - track.clientWidth;
-      programmatic = true;
-      if (track.scrollLeft >= max - 2) track.scrollTo({ left: 0, behavior: "smooth" });
-      else track.scrollBy({ left: step(), behavior: "smooth" });
-      setTimeout(function () { programmatic = false; }, 900);
+    if (!loop) return;
+
+    // scrollLeft only holds whole pixels, so the exact position is kept here and written out
+    // rounded; if the track has moved on its own since the last write, the visitor scrolled it,
+    // and the exact position follows them.
+    var held = false, onScreen = true, last = 0, raf = 0, pos = 0, written = 0;
+    function frame(now) {
+      raf = 0;
+      if (!onScreen || document.hidden) return;
+      var dt = last ? Math.min(now - last, 100) : 0;
+      last = now;
+      if (!held && now > holdUntil) {
+        if (Math.abs(track.scrollLeft - written) > 1) pos = track.scrollLeft;
+        pos += CAROUSEL_SPEED * dt / 1000;
+        var lw = loopWidth();
+        if (pos >= lw) pos -= lw;
+        written = Math.round(pos);
+        track.scrollLeft = written;
+      }
+      raf = requestAnimationFrame(frame);
     }
-    function stop() { if (timer) { clearInterval(timer); timer = null; } }
-    function start() {
-      stop();
-      if (!reducedMotion && total > perView()) timer = setInterval(advance, AUTOPLAY_MS);
-    }
+    function run() { if (!raf) { last = 0; raf = requestAnimationFrame(frame); } }
     function hold() { held = true; }
-    function release() { held = false; start(); }
+    function release() { held = false; run(); }
     slider.addEventListener("pointerenter", hold);
     slider.addEventListener("pointerleave", release);
     slider.addEventListener("focusin", hold);
     slider.addEventListener("focusout", release);
     slider.addEventListener("touchstart", hold, { passive: true });
-    slider.addEventListener("touchend", release, { passive: true });
-    track.addEventListener("scroll", function () { if (!programmatic) start(); }, { passive: true });
-    document.addEventListener("visibilitychange", function () { if (!document.hidden) start(); });
+    slider.addEventListener("touchend", function () { holdUntil = performance.now() + 2500; release(); }, { passive: true });
+    track.addEventListener("wheel", function () { holdUntil = performance.now() + 3000; }, { passive: true });
+    track.addEventListener("keydown", function () { holdUntil = performance.now() + 3000; });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) run(); });
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
         onScreen = entries[0].isIntersecting;
-        if (onScreen) start(); else stop();
-      }, { threshold: 0.25 }).observe(slider);
+        if (onScreen) run();
+      }, { threshold: 0.2 }).observe(slider);
     }
-    start();
+    run();
   });
 
   /* 4. Appointment request forms: one submission per click, and the Cloudflare Turnstile check.

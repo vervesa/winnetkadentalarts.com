@@ -575,6 +575,9 @@ figure { margin: 0; }
   -webkit-overflow-scrolling: touch; scrollbar-width: none;
 }
 .slider-track::-webkit-scrollbar { display: none; }
+/* While looping, the track moves under script control, so snapping is off (it would fight the
+   motion) and the arrows are never disabled. Reduced-motion visitors keep the snapping slider. */
+.slider.is-looping .slider-track { scroll-snap-type: none; }
 /* The cards at either end fade slightly into the band, so the row reads as a continuous rotation. */
 .slider-track {
   -webkit-mask-image: linear-gradient(to right, transparent, #000 48px, #000 calc(100% - 48px), transparent);
